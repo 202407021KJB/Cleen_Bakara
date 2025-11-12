@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입 페이지</title>
 </head>
 <body>
-	<form action = "joinController.java" method = "post">
+	<form action="<%=request.getContextPath()%>/join" method="post">
 		아이디 : <input type = "text" name = "userId" required><br>
 		비밀번호 : <input type = "password" name = "passwd" required><br>
 		<button type = "submit">회원가입</button>
