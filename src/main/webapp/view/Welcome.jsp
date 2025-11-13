@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     String userId = (String) session.getAttribute("userId");
-    if (userId == null) {
+    if (userId == null) 
+    {
         response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp?error=session");
         return;
     }
@@ -16,16 +17,23 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
-  body {
+  body 
+  {
     background-color: #f8f9fa;
   }
-  .navbar {
+  
+  .navbar 
+  {
     background-color: #2b2b2b;
   }
-  .navbar-brand, .nav-link, .navbar-text {
+  
+  .navbar-brand, .nav-link, .navbar-text 
+  {
     color: white !important;
   }
-  .banner {
+  
+  .banner 
+  {
     background: linear-gradient(135deg, #007bff, #6610f2);
     color: white;
     text-align: center;
@@ -33,15 +41,21 @@
     border-radius: 10px;
     margin: 30px 0;
   }
-  .game-card {
+  
+  .game-card 
+  {
     transition: 0.3s;
     cursor: pointer;
   }
-  .game-card:hover {
+  
+  .game-card:hover 
+  {
     transform: scale(1.05);
     box-shadow: 0 5px 20px rgba(0,0,0,0.2);
   }
-  footer {
+  
+  footer 
+  {
     margin-top: 60px;
     text-align: center;
     color: gray;
@@ -86,7 +100,7 @@
   <div class="row justify-content-center">
     <!-- 사다리 게임 -->
     <div class="col-md-4 mb-4">
-      <div class="card game-card" onclick="location.href='<%=request.getContextPath()%>/view/ladder.jsp'">
+      <div class="card game-card" onclick="location.href='<%=request.getContextPath()%>/ladder'">
         <img src="<%=request.getContextPath()%>/view/img/ladder.jpg" class="card-img-top" alt="사다리 게임">
         <div class="card-body text-center">
           <h5 class="card-title">사다리 게임</h5>
@@ -97,7 +111,7 @@
 
     <!-- 룰렛 게임 -->
     <div class="col-md-4 mb-4">
-      <div class="card game-card" onclick="location.href='<%=request.getContextPath()%>/view/roulette.jsp'">
+      <div class="card game-card" onclick="location.href='<%=request.getContextPath()%>/roulette'">
         <img src="<%=request.getContextPath()%>/view/img/roulette.jpg" class="card-img-top" alt="룰렛 게임">
         <div class="card-body text-center">
           <h5 class="card-title">룰렛 게임</h5>
