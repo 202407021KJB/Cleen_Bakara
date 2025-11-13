@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    String userId = (String) session.getAttribute("userId");
-    if (userId == null) 
+    String nickname = (String) session.getAttribute("nickname");
+    if (nickname == null)
     {
         response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp?error=session");
         return;
@@ -17,44 +17,63 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
-  body 
+  body
   {
     background-color: #f8f9fa;
   }
-  
-  .navbar 
+
+  .navbar
   {
     background-color: #2b2b2b;
   }
-  
-  .navbar-brand, .nav-link, .navbar-text 
+
+  .navbar-brand, .nav-link, .navbar-text
   {
     color: white !important;
   }
-  
-  .banner 
+
+  .banner
   {
     background: linear-gradient(135deg, #007bff, #6610f2);
     color: white;
     text-align: center;
     padding: 60px 0;
     border-radius: 10px;
-    margin: 30px 0;
+    margin: 30px 0 10px 0;
   }
-  
-  .game-card 
+
+  /* ✅ 캐러셀 화살표 색상 변경 (검정색) */
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon
   {
-    transition: 0.3s;
+    filter: invert(1);   /* 색상 반전 → 흰색 → 검정색 */
+  }
+
+  /* ✅ 캐러셀 이미지 스타일 */
+  .carousel-item img
+  {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.4s ease;
     cursor: pointer;
   }
-  
-  .game-card:hover 
+
+  .carousel-item img:hover
   {
-    transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    transform: scale(1.02);
   }
-  
-  footer 
+
+  /* ✅ 어두운 오버레이 추가 (텍스트 가독성) */
+  .carousel-caption
+  {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  footer
   {
     margin-top: 60px;
     text-align: center;
@@ -77,7 +96,8 @@
 
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
-        <span class="navbar-text me-3">안녕하세요, <strong><%= userId %></strong> 님 👋</span>
+        <!-- ✅ 아이디 대신 별명 출력 -->
+        <span class="navbar-text me-3">안녕하세요, <strong><%= nickname %></strong> 님 👋</span>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="<%=request.getContextPath()%>/view/MyInfo.jsp">마이페이지</a>
@@ -89,41 +109,57 @@
   </div>
 </nav>
 
-<!-- ✅ 배너 -->
+<!-- ✅ 환영 배너 -->
 <div class="container">
   <div class="banner">
     <h1>환영합니다 🎉</h1>
     <p>오늘도 Cleen Bakara에서 즐거운 하루를!</p>
   </div>
 
-  <!-- ✅ 게임 카드 -->
-  <div class="row justify-content-center">
-    <!-- 사다리 게임 -->
-    <div class="col-md-4 mb-4">
-      <div class="card game-card" onclick="location.href='<%=request.getContextPath()%>/ladder'">
-        <img src="<%=request.getContextPath()%>/view/img/ladder.jpg" class="card-img-top" alt="사다리 게임">
-        <div class="card-body text-center">
-          <h5 class="card-title">사다리 게임</h5>
-          <p class="card-text">운명을 결정짓는 사다리 타기 게임!</p>
+  <!-- ✅ 게임 배너 캐러셀 -->
+  <div id="gameCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top: 30px;">
+    <div class="carousel-inner">
+
+      <!-- 🪜 사다리 타기 -->
+      <div class="carousel-item active">
+        <!-- ✅ [여기에 사다리 이미지 넣기] -->
+        <a href="<%=request.getContextPath()%>/ladder">
+          <img src="<%=request.getContextPath()%>/view/img/LadderImg.png" class="d-block w-100" alt="사다리 게임">
+        </a>
+        <div class="carousel-caption">
+          <h3>🪜 사다리 타기</h3>
+          <p>운명을 결정짓는 짜릿한 사다리!</p>
+        </div>
+      </div>
+
+      <!-- 🎡 룰렛 게임 -->
+      <div class="carousel-item">
+        <!-- ✅ [여기에 룰렛 이미지 넣기] -->
+        <a href="<%=request.getContextPath()%>/roulette">
+          <img src="<%=request.getContextPath()%>/view/img/RouletteImg.png" class="d-block w-100" alt="룰렛 게임">
+        </a>
+        <div class="carousel-caption">
+          <h3>🎡 룰렛 게임</h3>
+          <p>돌려라! 당신의 행운을 시험해보세요!</p>
         </div>
       </div>
     </div>
 
-    <!-- 룰렛 게임 -->
-    <div class="col-md-4 mb-4">
-      <div class="card game-card" onclick="location.href='<%=request.getContextPath()%>/roulette'">
-        <img src="<%=request.getContextPath()%>/view/img/roulette.jpg" class="card-img-top" alt="룰렛 게임">
-        <div class="card-body text-center">
-          <h5 class="card-title">룰렛 게임</h5>
-          <p class="card-text">행운의 룰렛을 돌려보세요!</p>
-        </div>
-      </div>
-    </div>
+    <!-- 화살표 컨트롤 -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">이전</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">다음</span>
+    </button>
   </div>
 </div>
 
 <footer>
   <p>© 2025 Cleen Bakara Team | All Rights Reserved</p>
 </footer>
+
 </body>
 </html>
