@@ -12,7 +12,8 @@ public class LogoutController extends HttpServlet {
 
         // 세션 종료
         HttpSession session = request.getSession(false);
-        if (session != null) {
+        if (session != null) 
+        {
             session.invalidate();
         }
 
