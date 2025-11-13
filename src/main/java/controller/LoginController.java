@@ -8,31 +8,33 @@ import model.Member;
 import model.MemberDAO;
 
 @WebServlet("/login")
-public class LoginController extends HttpServlet {
-    private MemberDAO dao = new MemberDAO();
-
+public class LoginController extends HttpServlet
+{
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws ServletException, IOException
+    {
         request.setCharacterEncoding("UTF-8");
+
         String inputId = request.getParameter("userId");
         String inputPw = request.getParameter("passwd");
 
-        Member member = dao.findMember(inputId, inputPw);
+        ServletContext context = getServletContext();
+        String savedId = (String) context.getAttribute("savedId");
+        String savedPw = (String) context.getAttribute("savedPw");
+        String savedNick = (String) context.getAttribute("savedNick");
 
-        if (member != null) 
+        if (savedId != null && savedPw != null
+                && savedId.equals(inputId) && savedPw.equals(inputPw))
         {
-            // 로그인 성공 시 세션 생성
             HttpSession session = request.getSession();
-            session.setAttribute("userId", member.getUserId());
+            session.setAttribute("userId", savedId);
+            session.setAttribute("nickname", savedNick);
 
-            // 메인 페이지로 이동 (Controller 통해)
-            response.sendRedirect(request.getContextPath() + "/welcome");
-        } 
-        else 
+            response.sendRedirect(request.getContextPath() + "/view/Welcome.jsp");
+        }
+        else
         {
-            // 로그인 실패 시
-            response.sendRedirect("view/LoginForm.jsp?error=1");
+            response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp?error=1");
         }
     }
 }
