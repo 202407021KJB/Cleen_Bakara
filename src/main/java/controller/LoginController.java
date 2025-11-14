@@ -4,50 +4,48 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
-import model.Member;
-import model.MemberDAO;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException
+            throws ServletException, IOException
     {
-        /// 개발자 모드 : 배포 시에는 제거 or false 처리 해야 함
+        request.setCharacterEncoding("UTF-8");
+
+        // 이 로직은 개발자 모드 로직입니다.
+        // 최종 배포 시에는 false 처리 또는 코드 삭제 부탁드립니다.
         if (true)
         {
             HttpSession session = request.getSession();
-            session.setAttribute("userId", "user1");
-            session.setAttribute("nickname", "개발자모드");
+            session.setAttribute("saveID", "devID");
+            session.setAttribute("savePW", "devPW");
+            session.setAttribute("saveName", "개발자");
+
             response.sendRedirect(request.getContextPath() + "/view/Welcome.jsp");
             return;
         }
-    	
-        request.setCharacterEncoding("UTF-8");
 
-        String inputId = request.getParameter("userId");
-        String inputPw = request.getParameter("passwd");
+        // 로그인 화면에서 입력한 아이디, 비밀번호 값 받기
+        String userID = request.getParameter("userID");
+        String userPW = request.getParameter("userPW");
 
-        // 세션으로 저장
+        // 회원가입 시 저장되었던 정보를 가져오는 로직
         HttpSession session = request.getSession();
-        String savedId = (String) session.getAttribute("savedId");
-        String savedPw = (String) session.getAttribute("savedPw");
-        String savedNick = (String) session.getAttribute("savedNick");
 
-        // 로그인 검사
-        if (savedId != null && savedPw != null
-            && savedId.equals(inputId)
-            && savedPw.equals(inputPw))
+        String saveID = (String) session.getAttribute("saveID");
+        String savePW = (String) session.getAttribute("savePW");
+        String saveName = (String) session.getAttribute("saveName");
+
+        // 로그인 유효성 검사 -> 저장값과 입력값을 비교함
+        // 일치한다면 메인 페이지로 이동, 불일치시 로그인 폼 전환
+        if (saveID != null && savePW != null
+                && saveID.equals(userID) && savePW.equals(userPW))
         {
-            session.setAttribute("userId", savedId);
-            session.setAttribute("nickname", savedNick);
-
-            // 성공시 메인 페이지로 리다이렉션
             response.sendRedirect(request.getContextPath() + "/view/Welcome.jsp");
         }
         else
         {
-        	// 실패시 로그인 페이지로 리다이렉션
             response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp?error=1");
         }
     }

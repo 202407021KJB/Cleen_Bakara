@@ -9,11 +9,11 @@
 <script>
 function validateForm()
 {
-    const id = document.getElementById("userId").value;
-    const pw = document.getElementById("passwd").value;
+    const id = document.getElementById("userID").value;
+    const pw = document.getElementById("userPW").value;
     const nick = document.getElementById("nickname").value;
 
-    // 여기부턴 유효성 검사 로직
+    // 유효성 검사
     const idRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,16}$/;
     if (!idRegex.test(id))
     {
@@ -43,8 +43,8 @@ function validateForm()
 <h2>회원가입</h2>
 
 <form action="<%=request.getContextPath()%>/join" method="post" onsubmit="return validateForm()">
-    아이디: <input type="text" name="userId" id="userId"><br>
-    비밀번호: <input type="password" name="passwd" id="passwd"><br>
+    아이디: <input type="text" name="userId" id="userID"><br>
+    비밀번호: <input type="password" name="passwd" id="userPW"><br>
     별명: <input type="text" name="nickname" id="nickname"><br>
     <input type="submit" value="회원가입">
 </form>

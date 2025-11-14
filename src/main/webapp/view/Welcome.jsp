@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    String nickname = (String) session.getAttribute("nickname");
+	// 로그인 여부를 검사하는 부분
+	// 세션에 저장된 별명을 가져오기
+    String nickname = (String) session.getAttribute("saveName");
+	// 세션에 저장된 별명이 없는 경우, 메인 페이지로의 접근을 제한함
     if (nickname == null)
     {
         response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp?error=session");

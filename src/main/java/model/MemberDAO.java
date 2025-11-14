@@ -19,7 +19,7 @@ public class MemberDAO {
     {
         for (Member m : memberList) 
         {
-            if (m.getUserId().equals(id) && m.getPasswd().equals(pw)) 
+            if (m.getUserID().equals(id) && m.getUserPW().equals(pw)) 
             {
                 return m;
             }

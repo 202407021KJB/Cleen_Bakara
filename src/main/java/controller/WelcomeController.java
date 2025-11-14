@@ -13,7 +13,7 @@ public class WelcomeController extends HttpServlet {
         // 세션 가져오기 (로그인 여부 확인)
         HttpSession session = request.getSession(false);
 
-        if (session == null || session.getAttribute("userId") == null)
+        if (session == null || session.getAttribute("userID") == null)
         {
             // 세션이 없으면 로그인 페이지로 이동
             response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp?error=session");
