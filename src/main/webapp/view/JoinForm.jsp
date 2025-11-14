@@ -13,7 +13,7 @@ function validateForm()
     const pw = document.getElementById("passwd").value;
     const nick = document.getElementById("nickname").value;
 
-    // 아이디: 영문자(소문자 또는 대문자) 필수
+    // 여기부턴 유효성 검사 로직
     const idRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,16}$/;
     if (!idRegex.test(id))
     {
@@ -21,7 +21,6 @@ function validateForm()
         return false;
     }
 
-    // 비밀번호: 특수문자 최소 1개 포함
     const pwRegex = /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,20}$/;
     if (!pwRegex.test(pw))
     {
@@ -29,31 +28,26 @@ function validateForm()
         return false;
     }
 
-    // 별명: 특수문자 X, 한글 또는 영문만
     const nickRegex = /^[a-zA-Z가-힣]{2,12}$/;
     if (!nickRegex.test(nick))
     {
-        alert("별명은 한글 또는 영문만 사용 가능합니다. (특수문자 X)");
+        alert("별명은 한글 또는 영문만 가능합니다.");
         return false;
     }
-
     return true;
 }
 </script>
 </head>
-
 <body>
-<form action="<%=request.getContextPath()%>/join" method="post" onsubmit="return validateForm();">
-    <label>아이디:</label>
-    <input type="text" name="userId" id="userId" required><br>
 
-    <label>비밀번호:</label>
-    <input type="password" name="passwd" id="passwd" required><br>
+<h2>회원가입</h2>
 
-    <label>별명:</label>
-    <input type="text" name="nickname" id="nickname" required><br>
-
-    <button type="submit">회원가입</button>
+<form action="<%=request.getContextPath()%>/join" method="post" onsubmit="return validateForm()">
+    아이디: <input type="text" name="userId" id="userId"><br>
+    비밀번호: <input type="password" name="passwd" id="passwd"><br>
+    별명: <input type="text" name="nickname" id="nickname"><br>
+    <input type="submit" value="회원가입">
 </form>
+
 </body>
 </html>

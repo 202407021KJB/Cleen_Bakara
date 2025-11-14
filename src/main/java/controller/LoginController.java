@@ -11,9 +11,9 @@ import model.MemberDAO;
 public class LoginController extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+        throws ServletException, IOException
     {
-    	/// 개발자 모드 : 배포 시에는 제거 or false 처리 해야 함
+        /// 개발자 모드 : 배포 시에는 제거 or false 처리 해야 함
         if (true)
         {
             HttpSession session = request.getSession();
@@ -28,22 +28,26 @@ public class LoginController extends HttpServlet
         String inputId = request.getParameter("userId");
         String inputPw = request.getParameter("passwd");
 
-        ServletContext context = getServletContext();
-        String savedId = (String) context.getAttribute("savedId");
-        String savedPw = (String) context.getAttribute("savedPw");
-        String savedNick = (String) context.getAttribute("savedNick");
+        // 세션으로 저장
+        HttpSession session = request.getSession();
+        String savedId = (String) session.getAttribute("savedId");
+        String savedPw = (String) session.getAttribute("savedPw");
+        String savedNick = (String) session.getAttribute("savedNick");
 
+        // 로그인 검사
         if (savedId != null && savedPw != null
-                && savedId.equals(inputId) && savedPw.equals(inputPw))
+            && savedId.equals(inputId)
+            && savedPw.equals(inputPw))
         {
-            HttpSession session = request.getSession();
             session.setAttribute("userId", savedId);
             session.setAttribute("nickname", savedNick);
 
+            // 성공시 메인 페이지로 리다이렉션
             response.sendRedirect(request.getContextPath() + "/view/Welcome.jsp");
         }
         else
         {
+        	// 실패시 로그인 페이지로 리다이렉션
             response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp?error=1");
         }
     }
