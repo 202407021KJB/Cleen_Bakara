@@ -2,27 +2,27 @@ package model;
 
 public class Member
 {
-    private String userId;		// 아이디
-    private String passwd;		// 비밀번호
+    private String userID;		// 아이디
+    private String userPW;		// 비밀번호
     private String nickname;	// 별명
 
     // 생성자
-    public Member(String userId, String passwd, String nickname)
+    public Member(String userID, String userPW, String nickname)
     {
-        this.userId = userId;
-        this.passwd = passwd;
+        this.userID = userID;
+        this.userPW = userPW;
         this.nickname = nickname;
     }
 
     // Getter, Setter 추가
-    public String getUserId()
+    public String getUserID()
     {
-        return userId;
+        return userID;
     }
 
-    public String getPasswd()
+    public String getUserPW()
     {
-        return passwd;
+        return userPW;
     }
 
     public String getNickname()
