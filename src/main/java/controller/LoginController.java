@@ -13,6 +13,16 @@ public class LoginController extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+    	/// 개발자 모드 : 배포 시에는 제거 or false 처리 해야 함
+        if (true)
+        {
+            HttpSession session = request.getSession();
+            session.setAttribute("userId", "user1");
+            session.setAttribute("nickname", "개발자모드");
+            response.sendRedirect(request.getContextPath() + "/view/Welcome.jsp");
+            return;
+        }
+    	
         request.setCharacterEncoding("UTF-8");
 
         String inputId = request.getParameter("userId");
