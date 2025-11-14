@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// 회원 정보 값을 메모리에 저장하는 용도
+// DB 추가시 사용 예정입니다
 public class MemberDAO {
     private static List<Member> memberList = new ArrayList<>();
 

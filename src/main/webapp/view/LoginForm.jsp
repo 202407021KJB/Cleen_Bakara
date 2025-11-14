@@ -16,6 +16,7 @@
     <button type="submit">로그인</button>
 </form>
 
+<!-- 여기부터는 유효성 검사 로직 -->
 <%
     String error = request.getParameter("error");
     if ("1".equals(error)) {
@@ -29,7 +30,7 @@
     }
 %>
 
-<!-- ✅ 회원가입 버튼 추가 -->
+<!-- 회원가입 버튼 추가 -->
 <form action="<%=request.getContextPath()%>/view/JoinForm.jsp" method="get">
     <button type="submit">회원가입</button>
 </form>

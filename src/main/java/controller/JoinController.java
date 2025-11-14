@@ -11,7 +11,7 @@ import model.MemberDAO;
 public class JoinController extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+        throws ServletException, IOException
     {
         request.setCharacterEncoding("UTF-8");
 
@@ -19,15 +19,17 @@ public class JoinController extends HttpServlet
         String passwd = request.getParameter("passwd");
         String nickname = request.getParameter("nickname");
 
-        // 서버 콘솔 출력
-        System.out.println("회원가입 정보: " + userId + ", " + nickname);
+        // 세션으로 저장
+        HttpSession session = request.getSession();
+        session.setAttribute("savedId", userId);
+        session.setAttribute("savedPw", passwd);
+        session.setAttribute("savedNick", nickname);
 
-        // Application 영역에 사용자 정보 저장 (DB 대체)
-        ServletContext context = getServletContext();
-        context.setAttribute("savedId", userId);
-        context.setAttribute("savedPw", passwd);
-        context.setAttribute("savedNick", nickname);
+        // DAO 저장 (DB 응용 시 사용)
+        MemberDAO dao = new MemberDAO();
+        dao.addMember(new Member(userId, passwd, nickname));
 
+        // 회원가입 후, 로그인 페이지로 리다이렉션
         response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp");
     }
 }
