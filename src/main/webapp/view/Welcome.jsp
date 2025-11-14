@@ -42,14 +42,14 @@
     margin: 30px 0 10px 0;
   }
 
-  /* ✅ 캐러셀 화살표 색상 변경 (검정색) */
+  /* 캐러셀 화살표 색상 변경 (검정색) */
   .carousel-control-prev-icon,
   .carousel-control-next-icon
   {
-    filter: invert(1);   /* 색상 반전 → 흰색 → 검정색 */
+    filter: invert(1);
   }
 
-  /* ✅ 캐러셀 이미지 스타일 */
+  /* 캐러셀 이미지 스타일 */
   .carousel-item img
   {
     width: 100%;
@@ -65,7 +65,6 @@
     transform: scale(1.02);
   }
 
-  /* ✅ 어두운 오버레이 추가 (텍스트 가독성) */
   .carousel-caption
   {
     background: rgba(0, 0, 0, 0.5);
@@ -81,10 +80,11 @@
     padding: 10px;
   }
 </style>
+
 </head>
 <body>
 
-<!-- ✅ 상단 네비게이션 -->
+<!-- 상단 네비게이션 -->
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">🎮 Cleen Bakara</a>
@@ -96,33 +96,33 @@
 
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
-        <!-- ✅ 아이디 대신 별명 출력 -->
         <span class="navbar-text me-3">안녕하세요, <strong><%= nickname %></strong> 님 👋</span>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="<%=request.getContextPath()%>/view/MyInfo.jsp">마이페이지</a>
       </li>
+
+      <!-- 🔥 여기! 팝업 로그아웃 버튼 적용됨 -->
       <li class="nav-item">
-        <a class="nav-link" href="<%=request.getContextPath()%>/logout">로그아웃</a>
+        <a class="nav-link" href="#" onclick="confirmLogout()">로그아웃</a>
       </li>
     </ul>
   </div>
 </nav>
 
-<!-- ✅ 환영 배너 -->
+<!-- 환영 배너 -->
 <div class="container">
   <div class="banner">
     <h1>환영합니다 🎉</h1>
     <p>오늘도 Cleen Bakara에서 즐거운 하루를!</p>
   </div>
 
-  <!-- ✅ 게임 배너 캐러셀 -->
+  <!-- 게임 캐러셀 -->
   <div id="gameCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top: 30px;">
     <div class="carousel-inner">
 
-      <!-- 🪜 사다리 타기 -->
+      <!-- 사다리 타기 -->
       <div class="carousel-item active">
-        <!-- ✅ [여기에 사다리 이미지 넣기] -->
         <a href="<%=request.getContextPath()%>/ladder">
           <img src="<%=request.getContextPath()%>/view/img/LadderImg.png" class="d-block w-100" alt="사다리 게임">
         </a>
@@ -132,9 +132,8 @@
         </div>
       </div>
 
-      <!-- 🎡 룰렛 게임 -->
+      <!-- 룰렛 -->
       <div class="carousel-item">
-        <!-- ✅ [여기에 룰렛 이미지 넣기] -->
         <a href="<%=request.getContextPath()%>/roulette">
           <img src="<%=request.getContextPath()%>/view/img/RouletteImg.png" class="d-block w-100" alt="룰렛 게임">
         </a>
@@ -143,23 +142,34 @@
           <p>돌려라! 당신의 행운을 시험해보세요!</p>
         </div>
       </div>
+
     </div>
 
-    <!-- 화살표 컨트롤 -->
+    <!-- 캐러셀 버튼 -->
     <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">이전</span>
+      <span class="carousel-control-prev-icon"></span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">다음</span>
+      <span class="carousel-control-next-icon"></span>
     </button>
+
   </div>
 </div>
 
 <footer>
   <p>© 2025 Cleen Bakara Team | All Rights Reserved</p>
 </footer>
+
+<!-- 로그아웃 팝업 창 띄우기 -->
+<script>
+function confirmLogout()
+{
+    if (confirm("정말 로그아웃 하시겠습니까?"))
+    {
+        location.href = "<%=request.getContextPath()%>/logout";
+    }
+}
+</script>
 
 </body>
 </html>
