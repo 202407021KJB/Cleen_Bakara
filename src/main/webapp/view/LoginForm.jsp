@@ -10,8 +10,9 @@
 <h2>로그인 페이지</h2>
 
 <form action="<%=request.getContextPath()%>/login" method="post">
-    아이디: <input type="text" name="userId" required><br>
-    비밀번호: <input type="password" name="passwd" required><br>
+	<!--required 임시 제거 : 그냥 로그인 버튼만 눌러도 로그인 됩니다 임시 개발용!-->
+    아이디: <input type="text" name="userId"><br>
+    비밀번호: <input type="password" name="passwd"><br>
     <button type="submit">로그인</button>
 </form>
 
