@@ -4,46 +4,26 @@
   <meta charset="UTF-8" />
   <title>미니 게임 월드</title>
   <style>
-    /* 전체 페이지 스타일 */
-    body { 
-      font-family: Arial, sans-serif; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      height: 100vh; 
-      margin: 0; 
-      background-color: #f0f2f5; 
-    }
-    .container { 
-      text-align: center; 
-    }
-    h1 { 
-      color: #333; 
-    }
-    /* 게임으로 이동하는 링크 버튼 스타일 */
+    body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f2f5; }
+    .container { text-align: center; }
+    h1 { color: #333; }
     .game-link {
       display: inline-block;
       text-decoration: none;
-      background-color: #4CAF50; /* Green */
+      background-color: #4a7;
       color: white;
       padding: 20px 40px;
       margin: 20px;
       border-radius: 10px;
       font-size: 24px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
     }
-    .game-link:hover { 
-      transform: scale(1.05); 
-      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-    }
+    .game-link:hover { transform: scale(1.05); }
   </style>
 </head>
 <body>
-  <!-- 페이지 중앙에 위치할 컨테이너 -->
   <div class="container">
     <h1>미니 게임 월드</h1>
-    <!-- 각 게임 페이지로 이동하는 링크 -->
     <a href="ladder.jsp" class="game-link">사다리 게임</a>
     <a href="roulette.jsp" class="game-link">룰렛 게임</a>
   </div>
