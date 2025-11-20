@@ -1,32 +1,32 @@
 package model;
 
-public class Member
-{
-    private String userID;		// 아이디
-    private String userPW;		// 비밀번호
-    private String nickname;	// 별명
+import java.time.LocalDate;
 
-    // 생성자
-    public Member(String userID, String userPW, String nickname)
-    {
+public class Member {
+    private String userID;
+    private String userPW;
+    private String nickname;
+
+    // 캐시 관련
+    private int cash;                     // 보유 캐시
+    private LocalDate lastLoginDate;      // 마지막 로그인 날짜
+
+    public Member(String userID, String userPW, String nickname) {
         this.userID = userID;
         this.userPW = userPW;
         this.nickname = nickname;
+        this.cash = 0;                    // 기본 캐시 0
+        this.lastLoginDate = null;        // 아직 로그인 기록 없음
     }
 
-    // Getter, Setter 추가
-    public String getUserID()
-    {
-        return userID;
-    }
+    // Getter / Setter
+    public String getUserID() { return userID; }
+    public String getUserPW() { return userPW; }
+    public String getNickname() { return nickname; }
 
-    public String getUserPW()
-    {
-        return userPW;
-    }
+    public int getCash() { return cash; }
+    public void setCash(int cash) { this.cash = cash; }
 
-    public String getNickname()
-    {
-        return nickname;
-    }
+    public LocalDate getLastLoginDate() { return lastLoginDate; }
+    public void setLastLoginDate(LocalDate lastLoginDate) { this.lastLoginDate = lastLoginDate; }
 }
