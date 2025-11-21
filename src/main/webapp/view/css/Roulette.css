@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+body { 
+    font-family: Arial, sans-serif;
+    text-align: center; 
+    padding: 20px;
+    background-color: #f4f7f9; /* 사다리 게임과 배경 통일감 부여 */
+    margin: 0;
+}
+
+h1 { 
+    color: #333; 
+    margin-bottom: 30px;
+}
+
+#game-container { 
+    display: inline-block;
+    margin-top: 20px; 
+}
+
+/* 룰렛과 포인터를 담는 컨테이너 */
+#canvas-container { 
+    position: relative;
+    width: 500px; 
+    height: 500px; 
+}
+
+/* 룰렛 상단의 빨간색 화살표(포인터) 스타일 */
+#pointer { 
+    position: absolute;
+    left: 50%; 
+    top: -10px; 
+    transform: translateX(-50%); 
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent; 
+    border-right: 20px solid transparent;
+    border-top: 30px solid red; 
+    z-index: 10; 
+}
+
+canvas { 
+    display: block;
+}
+
+.controls { 
+    margin-top: 20px; 
+}
+
+/* 버튼 공통 스타일 */
+.btn { 
+    padding: 12px 25px;
+    border: none; 
+    background: #007bff; 
+    color: #fff; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    margin: 20px 0; 
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn:disabled { 
+    background: #ccc;
+}
+.btn:not(:disabled):hover {
+    background: #0056b3;
+}
+
+#options-container input { 
+    margin: 2px 5px; 
+    width: 100px;
+}
+
+/* '로비로 가기' 버튼 스타일 */
+#lobby-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+#lobby-btn:hover {
+    background-color: #5a6268;
+}

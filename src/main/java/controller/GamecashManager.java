@@ -9,13 +9,13 @@ public class GamecashManager {
     private static final int JOIN_REWARD = 100_000;      // 회원가입 보상
     private static final int DAILY_LOGIN_REWARD = 10_000; // 매일 첫 로그인 보상
 
-    // 🔹 회원가입 시 보너스 지급
+    // 회원가입 시 보너스 지급
     public static void giveJoinReward(Member member, HttpSession session) {
         member.setCash(member.getCash() + JOIN_REWARD);
         session.setAttribute("cash", member.getCash());
     }
 
-    // 🔹 오늘 첫 로그인인지 체크 후 1만 지급
+    // 오늘 첫 로그인인지 체크 후 1만 지급
     public static void giveDailyLoginReward(Member member, HttpSession session) {
         LocalDate today = LocalDate.now();
         LocalDate lastLogin = member.getLastLoginDate();
@@ -26,11 +26,14 @@ public class GamecashManager {
             member.setLastLoginDate(today);
             session.setAttribute("cash", member.getCash());
             session.setAttribute("lastLoginDate", today.toString());
-            System.out.println("<script> alert('오늘 첫 로그인 1만 캐시가 지급 되었습니다.');");
+            
+            // 수정: 콘솔 출력(System.out) 대신 세션에 메시지 저장
+            // System.out.println("<script> alert('오늘 첫 로그인 1만 캐시가 지급 되었습니다.');");
+            session.setAttribute("alertMsg", "오늘 첫 로그인! 10,000 캐시가 지급되었습니다. 💰");
         }
     }
 
-    // 🔹 게임 승리 캐시 지급
+    // 게임 승리 캐시 지급
     public static void winGame(Member member, HttpSession session,
                                int betAmount, double rate) {
 
@@ -39,7 +42,7 @@ public class GamecashManager {
         session.setAttribute("cash", member.getCash());
     }
 
-    // 🔹 게임 패배 캐시 차감
+    // 게임 패배 캐시 차감
     public static void loseGame(Member member, HttpSession session,
                                 int betAmount) {
 

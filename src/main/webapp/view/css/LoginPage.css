@@ -1,0 +1,156 @@
+/* ========================================================= */
+/* 🔑 1. 기본 설정 및 배경 */
+/* ========================================================= */
+body {
+    background-color: rgba(248, 249, 250, 0.9); 
+    background-image: none;
+    font-family: "Noto Sans KR", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 0; 
+    margin: 0;
+}
+
+/* ========================================================= */
+/* 🧭 2. 네비게이션 바 (MainPage와 동일하게 수정) */
+/* ========================================================= */
+.navbar {
+    background-color: #2b2b2b;
+    /* MainPage와 동일하게 상하 패딩 40px 적용 */
+    padding: 40px 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.container-fluid {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center; 
+}
+
+/* 로고 스타일 */
+.navbar-brand {
+    color: white !important;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+/* 우측 메뉴 위치 고정 */
+.navbar-nav {
+    position: absolute;
+    right: 20px; 
+    
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0 !important;
+}
+
+/* ========================================================= */
+/* 📝 3. 폼 컨테이너 및 청록색 테마 */
+/* ========================================================= */
+
+.form-container {
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    color: #1abc9c; 
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    border-color: #1abc9c;
+}
+
+/* 메인 버튼 (로그인, 회원가입 제출) */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #16a085;
+}
+
+/* 로그인 페이지의 '회원가입' 버튼 스타일 */
+.register-btn {
+    background-color: #6c757d; 
+    font-size: 16px;
+    margin-top: 5px; 
+}
+
+.register-btn:hover {
+    background-color: #5a6268; 
+}
+
+/* 오류 및 메시지 텍스트 스타일 */
+.message-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.message-container p {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.message-container .error {
+    color: #d9534f;
+    background-color: #fdd;
+    border: 1px solid #f2dede;
+}
+.message-container .session-error {
+    color: #f0ad4e;
+    background-color: #fcf8e3;
+    border: 1px solid #faebcc;
+}
+.message-container .join-success {
+    color: #1abc9c; 
+    background-color: #d4f7d4;
+    border: 1px solid #c3e6cb;
+}

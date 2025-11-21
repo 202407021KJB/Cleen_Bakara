@@ -12,23 +12,42 @@ body
 .navbar 
 {
     background-color: #2b2b2b;
-    padding: 10px 20px;
+    /* 💡 수정: 상하 패딩을 20px로 늘려, 버튼 위아래 여백을 확보하고 높이를 충분히 증가 */
+    padding: 40px 20px; 
     display: flex;
     align-items: center;
-    justify-content: space-between; 
 }
 
+/* 💡 로고 중앙 정렬을 위한 컨테이너-플루이드 내부 정렬 */
+.container-fluid {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    /* 💡 로고를 포함한 모든 요소를 중앙에 배치하기 위해 center로 변경 */
+    justify-content: center; 
+}
+
+/* 💡 로고 스타일 */
 .navbar-brand 
 {
     color: white !important;
     font-size: 22px;
     font-weight: bold;
-    margin-right: 20px;
+    /* 💡 중앙 로고를 메뉴와 분리하고 가운데 정렬하기 위해 절대 위치 사용 */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    /* 로고가 메뉴 위에 뜨도록 z-index 설정 */
+    z-index: 10;
 }
 
-/* 우측 메뉴 컨테이너 (환영 문구 + 버튼) */
+/* 💡 우측 메뉴 컨테이너 위치 고정 */
 .navbar-nav 
 {
+    /* 💡 우측 끝에 고정되도록 ms-auto 대신 absolute 사용 */
+    position: absolute;
+    right: 20px; /* 우측 여백 */
+    
     display: flex;
     align-items: center;
     margin: 0 !important;
@@ -44,42 +63,7 @@ body
     margin-right: 15px !important;
 }
 
-/* 검색창(구글 기반 스타일) */
-.search-bar 
-{
-    flex-grow: 1; 
-    max-width: 500px; 
-    margin: 0 auto; 
-    display: flex;
-    align-items: center;
-}
-
-/* 검색창(구글 기반 스타일) */
-.search-input 
-{
-    width: 100%;
-    padding: 12px 20px 12px 48px;
-    border-radius: 40px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    background: #ffffff;
-
-    /* 돋보기 아이콘 추가 */
-    background-image: url('../img/Search.png');
-    background-repeat: no-repeat;
-    background-size: 20px;
-    background-position: 15px center;
-
-    box-shadow: 0px 3px 10px rgba(0,0,0,0.15);
-    outline: none;
-    transition: all 0.2s ease-in-out;
-}
-
-.search-input:focus 
-{
-    box-shadow: 0px 4px 14px rgba(0,0,0,0.25);
-    border-color: #888;
-}
+/* 🗑️ 검색창(구글 기반 스타일) 섹션 전체 제거 */
 
 /* 마이페이지, 로그아웃 버튼 */
 .menu-btn
@@ -192,20 +176,12 @@ footer
     padding: 15px 0;
 }
 
-/* 반응형 */
+/* 🗑️ 반응형 검색창 관련 스타일 제거 */
 @media (max-width: 992px)
 {
-    .search-bar 
-    {
-        width: auto;
-        flex-grow: 1;
-        max-width: 400px;
-    }
+    /* 빈 미디어 쿼리 */
 }
 @media (max-width: 768px)
 {
-    .search-bar 
-    {
-        max-width: 100%;
-    }
+    /* 빈 미디어 쿼리 */
 }

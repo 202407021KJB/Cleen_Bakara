@@ -1,0 +1,135 @@
+/* MainPage.css, LoginPage.css와 스타일 통일 */
+body {
+    background-color: rgba(248, 249, 250, 0.9);
+    font-family: "Noto Sans KR", sans-serif;
+    margin: 0;
+    padding-top: 0;
+}
+
+/* 내비게이션 바 (MainPage와 동일) */
+.navbar {
+    background-color: #2b2b2b;
+    padding: 40px 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box; /* 패딩 포함 너비 계산 */
+}
+
+.container-fluid {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+/* 우측 메뉴 (버튼들) */
+.navbar-nav {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.menu-btn {
+    background: #444;
+    padding: 8px 18px;
+    margin-left: 10px;
+    border-radius: 25px;
+    color: white !important;
+    text-decoration: none;
+    font-size: 15px;
+    transition: 0.2s;
+}
+.menu-btn:hover { background: #666; }
+
+/* 마이페이지 폼 컨테이너 */
+.info-container {
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto; /* 중앙 정렬 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.info-container h2 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+/* 읽기 전용 필드 스타일 */
+.input-group input[readonly] {
+    background-color: #f8f9fa;
+    color: #777;
+    border-color: #e9ecef;
+}
+
+.action-btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.update-btn {
+    flex: 1;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.update-btn:hover { background-color: #0056b3; }
+
+.delete-btn {
+    padding: 15px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.delete-btn:hover { background-color: #c82333; }
