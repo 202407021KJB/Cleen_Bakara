@@ -42,9 +42,9 @@ function validateForm()
 
 <h2>회원가입</h2>
 
-<form action="<%=request.getContextPath()%>/join" method="post" onsubmit="return validateForm()">
-    아이디: <input type="text" name="userId" id="userID"><br>
-    비밀번호: <input type="password" name="passwd" id="userPW"><br>
+<form action="<%=request.getContextPath()%>/signup" method="post" onsubmit="return validateForm()">
+    아이디: <input type="text" name="userID" id="userID"><br>
+    비밀번호: <input type="password" name="userPW" id="userPW"><br>
     별명: <input type="text" name="nickname" id="nickname"><br>
     <input type="submit" value="회원가입">
 </form>

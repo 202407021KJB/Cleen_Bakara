@@ -14,6 +14,19 @@ public class MemberDAO {
         memberList.add(member);
     }
 
+    // 회원 찾기는 아이디로만 찾기(안전성)
+    public Member findMemberByID(String id)
+    {
+        for (Member m : memberList) 
+        {
+            if (m.getUserID().equals(id)) 
+            {
+                return m;
+            }
+        }
+        return null;
+    }
+    
     // 로그인
     public Member findMember(String id, String pw) 
     {
