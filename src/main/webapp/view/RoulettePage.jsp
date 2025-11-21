@@ -1,62 +1,44 @@
-0<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>룰렛 게임</title>
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-    h1 { color: #333; }
-    #game-container { display: inline-block; margin-top: 20px; }
-    /* 룰렛과 포인터를 담는 컨테이너 */
-    #canvas-container { position: relative; width: 500px; height: 500px; }
-    /* 룰렛 상단의 빨간색 화살표(포인터) 스타일 */
-    #pointer { position: absolute; left: 50%; top: -10px; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 30px solid red; z-index: 10; }
-    canvas { display: block; }
-    .controls { margin-top: 20px; }
-    /* 버튼 공통 스타일 */
-    .btn { padding: 10px 16px; border: none; background: #007bff; color: #fff; border-radius: 6px; cursor: pointer; margin: 5px; }
-    .btn:disabled { background: #ccc; }
-    #options-container input { margin: 2px 5px; width: 100px; }
-    /* '로비로 가기' 버튼 스타일 */
-    #lobby-btn {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 10px 15px;
-      background-color: #6c757d;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-  </style>
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Roulette.css">
 </head>
 <body>
 
-  <!-- 최상단에 위치한 로비 이동 링크 -->
-  <a href="index.html" id="lobby-btn">로비로 가기</a>
+  <a href="<%=request.getContextPath()%>/mainpage" id="lobby-btn">로비로 가기</a>
 
-  <h1>룰렛 게임</h1>
+  <h1>🎡 룰렛 게임</h1>
 
-  <!-- 
-    게임의 주요 UI 요소들을 담는 컨테이너입니다.
-    'data-context-path' 속성은 JavaScript에서 서버 경로를 올바르게 찾기 위해 사용됩니다.
-  -->
+  <div style="background: white; padding: 15px; margin: 10px auto; width: 300px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <h3>보유 캐시: <span id="my-cash" style="color: #e67e22;"><%= session.getAttribute("cash") %></span> 원</h3>
+    
+    <div style="margin: 10px 0;">
+       <label for="userPick">걸고 싶은 곳: </label>
+       <select id="userPick" style="padding: 5px;">
+         <option value="사과">🍎 사과</option>
+         <option value="바나나">🍌 바나나</option>
+       </select>
+    </div>
+
+    <div>
+       <label for="betAmount">베팅 금액: </label>
+       <input type="number" id="betAmount" value="1000" min="100" step="100" style="width: 80px; padding: 5px; text-align: right;"> 원
+    </div>
+  </div>
+
   <div id="game-container" data-context-path="${pageContext.request.contextPath}">
-    <!-- 룰렛 캔버스와 포인터를 감싸는 컨테이너 -->
     <div id="canvas-container">
       <div id="pointer"></div>
       <canvas id="roulette-canvas" width="500" height="500"></canvas>
     </div>
-    <!-- 룰렛 돌리기 버튼 -->
+    
     <button id="spin-btn" class="btn">돌리기!</button>
   </div>
 
-  <!-- 
-    룰렛 게임의 모든 클라이언트 사이드 로직을 담고 있는 
-    JavaScript 파일을 불러옵니다.
-  -->
-  <script src="view/roulette.js"></script>
+  <script src="<%=request.getContextPath()%>/view/RouletteGame.js"></script>
+
 </body>
 </html>

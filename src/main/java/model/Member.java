@@ -19,14 +19,16 @@ public class Member {
         this.lastLoginDate = null;        // 아직 로그인 기록 없음
     }
 
-    // Getter / Setter
+    // Getter
     public String getUserID() { return userID; }
     public String getUserPW() { return userPW; }
     public String getNickname() { return nickname; }
-
     public int getCash() { return cash; }
-    public void setCash(int cash) { this.cash = cash; }
-
     public LocalDate getLastLoginDate() { return lastLoginDate; }
+    
+    // Setter
+    public void setUserPW(String userPW) { this.userPW = userPW; }
+    public void setCash(int cash) { this.cash = cash; }
+    public void setNickname(String nickname) { this.nickname = nickname; }
     public void setLastLoginDate(LocalDate lastLoginDate) { this.lastLoginDate = lastLoginDate; }
 }
