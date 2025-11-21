@@ -31,7 +31,7 @@
 %>
 
 <!-- 회원가입 버튼 추가 -->
-<form action="<%=request.getContextPath()%>/view/JoinForm.jsp" method="get">
+<form action="<%=request.getContextPath()%>/view/SignUpPage.jsp" method="get">
     <button type="submit">회원가입</button>
 </form>
 

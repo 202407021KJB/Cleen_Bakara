@@ -4,6 +4,9 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
+import model.Member;
+import model.MemberDAO;
+import controller.GamecashManager;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet
@@ -13,40 +16,48 @@ public class LoginController extends HttpServlet
     {
         request.setCharacterEncoding("UTF-8");
 
-        // 이 로직은 개발자 모드 로직입니다.
-        // 최종 배포 시에는 false 처리 또는 코드 삭제 부탁드립니다.
+        // 해당 모드는 개발자 모드(그냥 로그인만 눌러도 로그인 됨)
         if (true)
         {
             HttpSession session = request.getSession();
             session.setAttribute("saveID", "devID");
             session.setAttribute("savePW", "devPW");
             session.setAttribute("saveName", "개발자");
-
-            response.sendRedirect(request.getContextPath() + "/view/Welcome.jsp");
+            session.setAttribute("userID", "devID"); // WelcomeController 호환성 추가
+            session.setAttribute("cash", 999999);    // 임시 캐시 설정
+            response.sendRedirect(request.getContextPath() + "/mainpage");
             return;
         }
 
-        // 로그인 화면에서 입력한 아이디, 비밀번호 값 받기
+        // 입력값 받아오기
         String userID = request.getParameter("userID");
         String userPW = request.getParameter("userPW");
+        
+        // DAO를 사용하여 회원 조회
+        MemberDAO dao = new MemberDAO();
+        Member member = dao.findMember(userID, userPW);
 
-        // 회원가입 시 저장되었던 정보를 가져오는 로직
-        HttpSession session = request.getSession();
-
-        String saveID = (String) session.getAttribute("saveID");
-        String savePW = (String) session.getAttribute("savePW");
-        String saveName = (String) session.getAttribute("saveName");
-
-        // 로그인 유효성 검사 -> 저장값과 입력값을 비교함
-        // 일치한다면 메인 페이지로 이동, 불일치시 로그인 폼 전환
-        if (saveID != null && savePW != null
-                && saveID.equals(userID) && savePW.equals(userPW))
+        // 로그인 유효성 로직
+        if (member != null)
         {
-            response.sendRedirect(request.getContextPath() + "/view/Welcome.jsp");
+            // 로그인 성공 시
+            HttpSession session = request.getSession();
+            
+            // 세션 속성 통일화
+            session.setAttribute("userID", member.getUserID()); 
+            session.setAttribute("saveName", member.getNickname());
+            session.setAttribute("cash", member.getCash()); 
+
+            // 일일 로그인 캐시 지급
+            GamecashManager.giveDailyLoginReward(member, session);
+
+            // 로그인이 성공 했으니 메인 홈페이지로 리다이렉션
+            response.sendRedirect(request.getContextPath() + "/mainpage");
         }
         else
         {
-            response.sendRedirect(request.getContextPath() + "/view/LoginForm.jsp?error=1");
+            // 로그인 실패시 로그인 페이지로 리다이렉션
+            response.sendRedirect(request.getContextPath() + "/view/LoginPage.jsp?error=1");
         }
     }
 }
