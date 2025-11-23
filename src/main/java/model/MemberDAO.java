@@ -1,71 +1,174 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.time.LocalDate;
 
 public class MemberDAO {
-    private static List<Member> memberList = new ArrayList<>();
+	
+	/** DB 연결 정보
+	 * DB_URL : DB 담긴 주소
+	 * DB_ID  : MySQL 아이디임
+	 * DB_PW  : MySQL 비밀번호임
+	 */
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/bakara_db?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8";
+    private static final String DB_ID = "root";
+    private static final String DB_PW = "1234";
 
+    // DB 연결 객체 가져오기
+    private Connection getConnection() throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection(DB_URL, DB_ID, DB_PW);
+    }
+
+    // MySQL 이용 했습니다
     // 회원가입
     public void addMember(Member member) {
-        memberList.add(member);
+        String sql = "INSERT INTO member (userID, userPW, nickname, cash, lastLoginDate) VALUES (?, ?, ?, ?, ?)";
+        
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, member.getUserID());
+            pstmt.setString(2, member.getUserPW());
+            pstmt.setString(3, member.getNickname());
+            pstmt.setInt(4, member.getCash());
+            
+            // LocalDate -> java.sql.Date 변환
+            if (member.getLastLoginDate() != null) {
+                pstmt.setDate(5, java.sql.Date.valueOf(member.getLastLoginDate()));
+            } else {
+                pstmt.setDate(5, null);
+            }
+            
+            pstmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    // 아이디로 찾기
+    // 아이디로 회원 찾을 것임
     public Member findMemberByID(String id) {
-        for (Member m : memberList) {
-            if (m.getUserID().equals(id)) {
-                return m;
-            }
-        }
-        return null;
-    }
-    
-    // 로그인 확인
-    public Member findMember(String id, String pw) {
-        for (Member m : memberList) {
-            if (m.getUserID().equals(id) && m.getUserPW().equals(pw)) {
-                return m;
-            }
-        }
-        return null;
-    }
-
-    // [추가] 회원 정보 수정 (비밀번호, 닉네임 변경)
-    public void updateMember(Member updateReq) {
-        for (Member m : memberList) {
-            if (m.getUserID().equals(updateReq.getUserID())) {
-                // 비밀번호가 비어있지 않으면 수정
-                if (updateReq.getUserPW() != null && !updateReq.getUserPW().isEmpty()) {
-                    // Member 클래스에 setter 필요 (없으면 아래 Member.java 참고하여 추가)
-                    // 여기서는 편의상 필드에 직접 접근하거나 setter가 있다고 가정
-                    // 실제로는 m.setUserPW(...) 필요
+        String sql = "SELECT * FROM member WHERE userID = ?";
+        Member member = null;
+        
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, id);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    member = new Member(
+                        rs.getString("userID"),
+                        rs.getString("userPW"),
+                        rs.getString("nickname")
+                    );
+                    member.setCash(rs.getInt("cash"));
+                    
+                    // java.sql.Date -> LocalDate 변환
+                    Date date = rs.getDate("lastLoginDate");
+                    if (date != null) {
+                        member.setLastLoginDate(date.toLocalDate());
+                    }
                 }
-                // 닉네임 수정
-                // m.setNickname(updateReq.getNickname()); 
-                // Member 클래스가 수정 불가능한 구조라면 아래처럼 교체해야 함.
-                // 여기서는 Member 객체의 필드를 수정하는 방식 대신, 리스트 내 객체를 갱신하는 방식 사용
-                
-                // *주의*: Member 클래스에 Setter가 없으면 추가해야 합니다.
-                // 아래 코드를 위해 Member.java에 setUserPW, setNickname을 추가해주세요.
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return member;
+    }
+    
+    // 로그인 확인용
+    public Member findMember(String id, String pw) {
+        String sql = "SELECT * FROM member WHERE userID = ? AND userPW = ?";
+        Member member = null;
+        
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, id);
+            pstmt.setString(2, pw);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    member = new Member(
+                        rs.getString("userID"),
+                        rs.getString("userPW"),
+                        rs.getString("nickname")
+                    );
+                    member.setCash(rs.getInt("cash"));
+                    
+                    Date date = rs.getDate("lastLoginDate");
+                    if (date != null) {
+                        member.setLastLoginDate(date.toLocalDate());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return member;
+    }
+
+    // 회원 정보 업데이트
+    public boolean updateMemberInfo(String id, String newPw, String newNickname) {
+        String sql = "UPDATE member SET userPW = ?, nickname = ? WHERE userID = ?";
+        
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, newPw);
+            pstmt.setString(2, newNickname);
+            pstmt.setString(3, id);
+            
+            int result = pstmt.executeUpdate();
+            return result > 0; // 1개 이상 수정되면 성공
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
     
-    // [추가] 리스트 내 객체 직접 수정 (Member 클래스 수정 없이 사용하기 위해)
-    public boolean updateMemberInfo(String id, String newPw, String newNickname) {
-        for (Member m : memberList) {
-            if (m.getUserID().equals(id)) {
-                m.setUserPW(newPw);
-                m.setNickname(newNickname);
-                return true;
+    // [캐시 및 접속일 업데이트] (중요! 게임 결과 저장용 메서드 추가 필요)
+    // GamecashManager 등에서 호출할 수 있도록 캐시 업데이트 기능이 필요합니다.
+    // 기존 코드에서는 객체만 수정하면 되었지만, DB 버전에서는 반드시 'UPDATE' 쿼리를 날려야 저장됩니다.
+    public void updateCashAndDate(Member member) {
+        String sql = "UPDATE member SET cash = ?, lastLoginDate = ? WHERE userID = ?";
+        
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, member.getCash());
+            if (member.getLastLoginDate() != null) {
+                pstmt.setDate(2, java.sql.Date.valueOf(member.getLastLoginDate()));
+            } else {
+                pstmt.setDate(2, null);
             }
+            pstmt.setString(3, member.getUserID());
+            
+            pstmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return false;
     }
 
-    // [추가] 회원 탈퇴
+    // 회원 탈퇴
     public boolean deleteMember(String id) {
-        return memberList.removeIf(m -> m.getUserID().equals(id));
+        String sql = "DELETE FROM member WHERE userID = ?";
+        
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, id);
+            int result = pstmt.executeUpdate();
+            return result > 0;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

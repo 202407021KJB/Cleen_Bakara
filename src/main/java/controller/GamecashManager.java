@@ -3,6 +3,7 @@ package controller;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import model.Member;
+import model.MemberDAO; // DB 연결을 위해 import
 
 public class GamecashManager {
 
@@ -13,6 +14,10 @@ public class GamecashManager {
     public static void giveJoinReward(Member member, HttpSession session) {
         member.setCash(member.getCash() + JOIN_REWARD);
         session.setAttribute("cash", member.getCash());
+
+        // 가입 보너스 지급 후 DB 업데이트
+        MemberDAO dao = new MemberDAO();
+        dao.updateCashAndDate(member);
     }
 
     // 오늘 첫 로그인인지 체크 후 1만 지급
@@ -27,9 +32,12 @@ public class GamecashManager {
             session.setAttribute("cash", member.getCash());
             session.setAttribute("lastLoginDate", today.toString());
             
-            // 수정: 콘솔 출력(System.out) 대신 세션에 메시지 저장
-            // System.out.println("<script> alert('오늘 첫 로그인 1만 캐시가 지급 되었습니다.');");
+            // 알림 메시지 세션 저장
             session.setAttribute("alertMsg", "오늘 첫 로그인! 10,000 캐시가 지급되었습니다. 💰");
+
+            // 변경된 날짜와 캐시를 DB에 저장
+            MemberDAO dao = new MemberDAO();
+            dao.updateCashAndDate(member);
         }
     }
 
@@ -40,6 +48,10 @@ public class GamecashManager {
         int reward = (int)(betAmount * rate);
         member.setCash(member.getCash() + reward);
         session.setAttribute("cash", member.getCash());
+
+        // 게임 승리 후 늘어난 캐시 DB 저장
+        MemberDAO dao = new MemberDAO();
+        dao.updateCashAndDate(member);
     }
 
     // 게임 패배 캐시 차감
@@ -49,5 +61,9 @@ public class GamecashManager {
         member.setCash(member.getCash() - betAmount);
         if (member.getCash() < 0) member.setCash(0);
         session.setAttribute("cash", member.getCash());
+
+        // [DB 저장 추가] 게임 패배 후 줄어든 캐시 DB 저장
+        MemberDAO dao = new MemberDAO();
+        dao.updateCashAndDate(member);
     }
 }
