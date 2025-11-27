@@ -62,11 +62,6 @@
 </nav>
 
 <div class="container">
-  <div class="banner">
-    <h1>환영합니다 🎉</h1>
-    <p>오늘도 Cleen Bakara에서 즐거운 하루를!</p>
-  </div>
-
   <div id="gameCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -74,7 +69,7 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="<%=request.getContextPath()%>/ladder">
+        <a href="#" onclick="checkLoginAndOpenModal('ladderModal')">
           <img src="<%=request.getContextPath()%>/view/img/LadderImg.png" class="d-block w-100" alt="사다리 게임">
         </a>
         <div class="carousel-caption">
@@ -83,13 +78,68 @@
         </div>
       </div>
       <div class="carousel-item">
-        <a href="<%=request.getContextPath()%>/roulette">
+        <a href="#" onclick="checkLoginAndOpenModal('rouletteModal')">
           <img src="<%=request.getContextPath()%>/view/img/RouletteImg.png" class="d-block w-100" alt="룰렛 게임">
         </a>
         <div class="carousel-caption">
           <h3>🎡 룰렛 게임</h3>
           <p>돌려라! 당신의 행운을 시험해보세요!</p>
         </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="qna-promo my-5 p-5 text-center" style="background-color: #f4f7f9; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+      <h2 style="color: #2c3e50; margin-bottom: 15px; font-weight: bold;">❓ 자주 묻는 질문 (Q&A)</h2>
+      <p class="text-muted" style="font-size: 1.1em; margin-bottom: 25px;">게임 이용 및 캐시 관련하여 궁금한 점을 바로 해결하실 수 있습니다.</p>
+      <a href="<%=request.getContextPath()%>/view/QnAPage.jsp" class="btn btn-primary btn-lg" 
+         style="background-color: #1abc9c; border-color: #1abc9c; font-weight: bold;">
+          Q&A 페이지로 이동하기
+      </a>
+  </div>
+  </div>
+
+<div class="modal fade" id="ladderModal" tabindex="-1" aria-labelledby="ladderModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ladderModalLabel">🪜 사다리 게임 설정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="ladderSetupForm" action="<%=request.getContextPath()%>/view/LadderPage.jsp" method="GET">
+          <div class="mb-3">
+            <label for="animalCountInput" class="form-label">동물 마리 수를 입력하세요 (2~10마리):</label>
+            <input type="number" class="form-control" id="animalCountInput" name="animalCount" min="2" max="10" value="3" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="submit" form="ladderSetupForm" class="btn btn-primary">게임 시작</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="rouletteModal" tabindex="-1" aria-labelledby="rouletteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rouletteModalLabel">🎡 룰렛 게임 설정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="rouletteSetupForm" action="<%=request.getContextPath()%>/roulette" method="GET">
+          <div class="mb-3">
+            <label for="fruitCountInput" class="form-label">과일 개수를 입력하세요 (2~10개):</label>
+            <input type="number" class="form-control" id="fruitCountInput" name="fruitCount" min="2" max="10" value="2" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="submit" form="rouletteSetupForm" class="btn btn-primary">게임 시작</button>
       </div>
     </div>
   </div>
@@ -101,9 +151,21 @@
 
 <script>
 const CONTEXT_PATH = "<%=request.getContextPath()%>";
+const IS_LOGGED_IN = <%=isLoggedIn%>;
+
 function confirmLogout() {
     if (confirm("정말 로그아웃 하시겠습니까?")) {
         location.href = CONTEXT_PATH + "/logout";
+    }
+}
+
+function checkLoginAndOpenModal(modalId) {
+    if (!IS_LOGGED_IN) {
+        alert("로그인이 필요한 서비스입니다.");
+        location.href = CONTEXT_PATH + "/view/LoginPage.jsp";
+    } else {
+        const gameModal = new bootstrap.Modal(document.getElementById(modalId));
+        gameModal.show();
     }
 }
 </script>

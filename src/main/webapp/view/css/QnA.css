@@ -1,0 +1,29 @@
+/* QnA.css - QnAPage.jsp 전용 스타일 */
+@charset "UTF-8";
+
+.qna-accordion-section {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.accordion-button {
+    font-weight: bold;
+    color: #2c3e50; /* 타이틀 색상 */
+    background-color: #f8f9fa;
+    padding: 15px;
+}
+.accordion-body {
+    padding: 20px;
+    line-height: 1.6;
+    background-color: #ffffff;
+    border-top: 1px solid #eee;
+}
+.accordion-item {
+    border: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+    border-radius: 8px !important;
+    overflow: hidden;
+}

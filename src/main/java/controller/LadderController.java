@@ -40,52 +40,75 @@ public class LadderController extends HttpServlet {
 
         try {
             int players = Integer.parseInt(request.getParameter("players"));
-            int pickIndex = Integer.parseInt(request.getParameter("pick")); // 유저 선택 (0:좌, 1:우)
-            int betAmount = Integer.parseInt(request.getParameter("bet"));  // 베팅 금액
+            int pickIndex = Integer.parseInt(request.getParameter("pick"));
+            int betAmount = Integer.parseInt(request.getParameter("bet"));
 
-            // 예외 처리
+            if (players < 2 || players > 10) {
+                throw new IllegalArgumentException("참가 인원은 2에서 10명 사이여야 합니다.");
+            }
             if (betAmount <= 0 || member.getCash() < betAmount) {
                 throw new IllegalArgumentException("보유 캐시가 부족하거나 올바르지 않은 금액입니다.");
             }
 
-            // 사다리 데이터 생성
-            List<Integer> xPositions = new ArrayList<>();
-            List<LadderData.Rung> rungs = new ArrayList<>();
-            int ladderLeft = 50, ladderRight = 450;
-            int stepX = (ladderRight - ladderLeft) / (players - 1);
-            for (int i = 0; i < players; i++) xPositions.add(ladderLeft + i * stepX);
+            // 결과 배열 생성 및 셔플
+            List<String> results = new ArrayList<>();
+            results.add("당첨");
+            for (int i = 0; i < players - 1; i++) {
+                results.add("꽝");
+            }
+            Collections.shuffle(results);
 
+            // 사다리 데이터 생성 (가로줄만 생성, x좌표는 클라이언트에서 계산)
+            List<LadderData.Rung> rungs = new ArrayList<>();
             Random rand = new Random();
-            for (int y = 70; y < 350; y += 30) {
-                for (int i = 0; i < players - 1; i++) {
-                    if (rand.nextBoolean()) rungs.add(new LadderData.Rung(y, i));
+            int rungCount = players * 2; // 밀도
+            for (int i = 0; i < rungCount * 2 && rungs.size() < rungCount; i++) { // 최대 시도 횟수 추가
+                int col = rand.nextInt(players - 1);
+                // y좌표는 클라이언트의 LADDER_VERTICAL_TOP/BOTTOM(50/340)과 유사한 범위 내에서 생성
+                // 시작(동물), 끝(결과)과 겹치지 않도록 상하단에 여유 공간 확보
+                int y = rand.nextInt(230) + 80; // 80 ~ 309
+                
+                final int finalY = y;
+                // 겹치는지 확인: 현재 열, 왼쪽, 오른쪽에 너무 가까운 가로장이 있는지 확인
+                boolean canPlace = !rungs.stream().anyMatch(r -> 
+                    (r.col >= col - 1 && r.col <= col + 1) && (Math.abs(r.y - finalY) < 25)
+                );
+
+                if (canPlace) {
+                    rungs.add(new LadderData.Rung(y, col));
                 }
             }
             
             // 사다리 결과 계산
             rungs.sort(Comparator.comparingInt(r -> r.y));
-            int currentPos = pickIndex;
+            int endPos = pickIndex;
             for (LadderData.Rung rung : rungs) {
-                if (rung.col == currentPos) currentPos++;
-                else if (rung.col == currentPos - 1) currentPos--;
+                if (rung.col == endPos) {
+                    endPos++;
+                } else if (rung.col == endPos - 1) {
+                    endPos--;
+                }
             }
 
-            // 승패 판정 (0번 도착=당첨, 1번 도착=꽝)
-            boolean isWin = (currentPos == 0); 
+            // 승패 판정
+            boolean isWin = results.get(endPos).equals("당첨");
             String message;
-            
+            double payout = (double) players;
+
             if (isWin) {
-                GamecashManager.winGame(member, session, betAmount, 2.0); // 2배 지급
-                message = "축하합니다! 당첨되었습니다! (+" + (betAmount * 2) + "원)";
+                GamecashManager.winGame(member, session, betAmount, payout);
+                int prize = (int) (betAmount * payout);
+                message = String.format("축하합니다! %,d 원에 당첨되었습니다!", prize);
             } else {
                 GamecashManager.loseGame(member, session, betAmount);
-                message = "아쉽네요.. 꽝입니다. (-" + betAmount + "원)";
+                message = String.format("아쉽네요.. %,d 원을 잃었습니다.", betAmount);
             }
 
             // 결과 JSON 생성
             Map<String, Object> responseData = new HashMap<>();
-            responseData.put("ladderData", new LadderData(xPositions, rungs));
-            responseData.put("resultIndex", currentPos);
+            // xPositions는 이제 클라이언트에서 처리하므로 응답에 포함하지 않음
+            responseData.put("ladderData", new LadderData(null, rungs)); 
+            responseData.put("results", results);
             responseData.put("isWin", isWin);
             responseData.put("message", message);
             responseData.put("currentCash", member.getCash());
@@ -95,13 +118,8 @@ public class LadderController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            
-            // 🚨 수정 전 (위험함): 수동 문자열 조합
-            // response.getWriter().write("{\"error\": \"" + e.getMessage() + "\"}");
-
-            // ✅ 수정 후 (안전함): Gson을 사용하여 JSON 생성
             Map<String, String> errorData = new HashMap<>();
-            errorData.put("error", e.getMessage()); // Gson이 특수문자 등을 자동으로 처리해줍니다.
+            errorData.put("error", e.getMessage());
             response.getWriter().write(new Gson().toJson(errorData));
         }
     }
