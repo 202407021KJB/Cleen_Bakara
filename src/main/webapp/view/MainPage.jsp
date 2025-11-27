@@ -74,7 +74,7 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="<%=request.getContextPath()%>/ladder">
+        <a href="#" onclick="checkLoginAndOpenModal('ladderModal')">
           <img src="<%=request.getContextPath()%>/view/img/LadderImg.png" class="d-block w-100" alt="사다리 게임">
         </a>
         <div class="carousel-caption">
@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <a href="<%=request.getContextPath()%>/roulette">
+        <a href="#" onclick="checkLoginAndOpenModal('rouletteModal')">
           <img src="<%=request.getContextPath()%>/view/img/RouletteImg.png" class="d-block w-100" alt="룰렛 게임">
         </a>
         <div class="carousel-caption">
@@ -95,15 +95,75 @@
   </div>
 </div>
 
+<!-- 사다리 설정 모달 추가 -->
+<div class="modal fade" id="ladderModal" tabindex="-1" aria-labelledby="ladderModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ladderModalLabel">🪜 사다리 게임 설정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="ladderSetupForm" action="<%=request.getContextPath()%>/view/LadderPage.jsp" method="GET">
+          <div class="mb-3">
+            <label for="animalCountInput" class="form-label">동물 마리 수를 입력하세요 (2~10마리):</label>
+            <input type="number" class="form-control" id="animalCountInput" name="animalCount" min="2" max="10" value="3" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="submit" form="ladderSetupForm" class="btn btn-primary">게임 시작</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 룰렛 설정 모달 추가 -->
+<div class="modal fade" id="rouletteModal" tabindex="-1" aria-labelledby="rouletteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rouletteModalLabel">🎡 룰렛 게임 설정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="rouletteSetupForm" action="<%=request.getContextPath()%>/roulette" method="GET">
+          <div class="mb-3">
+            <label for="fruitCountInput" class="form-label">과일 개수를 입력하세요 (2~10개):</label>
+            <input type="number" class="form-control" id="fruitCountInput" name="fruitCount" min="2" max="10" value="2" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="submit" form="rouletteSetupForm" class="btn btn-primary">게임 시작</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <p>JSP 과제 | 조영록 | 문건우 | 김종범</p>
 </footer>
 
 <script>
 const CONTEXT_PATH = "<%=request.getContextPath()%>";
+const IS_LOGGED_IN = <%=isLoggedIn%>;
+
 function confirmLogout() {
     if (confirm("정말 로그아웃 하시겠습니까?")) {
         location.href = CONTEXT_PATH + "/logout";
+    }
+}
+
+function checkLoginAndOpenModal(modalId) {
+    if (!IS_LOGGED_IN) {
+        alert("로그인이 필요한 서비스입니다.");
+        location.href = CONTEXT_PATH + "/view/LoginPage.jsp";
+    } else {
+        const gameModal = new bootstrap.Modal(document.getElementById(modalId));
+        gameModal.show();
     }
 }
 </script>
