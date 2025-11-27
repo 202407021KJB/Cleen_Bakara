@@ -24,56 +24,6 @@
   <meta charset="UTF-8" />
   <title>사다리 게임</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Ladder.css">
-  <style>
-    body { text-align: center; }
-    h1 { margin-bottom: 15px !important; }
-    .bet-input {
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 0.9em;
-      font-weight: bold;
-      text-align: center;
-      width: 80px;
-      transition: all 0.3s ease;
-      -moz-appearance: textfield;
-    }
-    .bet-input::-webkit-outer-spin-button,
-    .bet-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    .bet-input:focus {
-      border-color: #4ECCA3;
-      box-shadow: 0 0 8px rgba(78, 204, 163, 0.5);
-      outline: none;
-    }
-    #replay-btn { display: none; margin-top: 15px; }
-    #ladder-container { position: relative; }
-    #game-container { display: inline-block; position: relative; }
-    .betting-box {
-      background: white;
-      padding: 10px 20px; /* Reduced padding */
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-      display: inline-block;
-      margin-bottom: 10px; /* Reduced margin */
-    }
-    .betting-box h3 {
-        font-size: 1.2rem; /* Reduced font size */
-        margin-bottom: 8px; /* Reduced margin */
-    }
-    .regenerate-controls {
-      margin-top: 8px; /* Reduced margin */
-      padding-top: 8px; /* Reduced padding */
-      border-top: 1px solid #eee;
-      text-align: right;
-    }
-    .regenerate-controls label { font-size: 0.8em; }
-    .regenerate-controls .bet-input { width: 55px; font-size: 0.8em; padding: 4px; }
-    .regenerate-controls .btn { font-size: 0.8em; padding: 4px 8px; }
-  </style>
 </head>
 <body>
 

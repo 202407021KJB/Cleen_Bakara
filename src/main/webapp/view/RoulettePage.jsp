@@ -6,39 +6,6 @@
   <meta charset="UTF-8">
   <title>룰렛 게임</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Roulette.css">
-  <style>
-    .bet-input {
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 0.9em;
-      font-weight: bold;
-      text-align: center;
-      width: 80px;
-      transition: all 0.3s ease;
-      -moz-appearance: textfield;
-    }
-    .bet-input::-webkit-outer-spin-button,
-    .bet-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    .bet-input:focus {
-      border-color: #4ECCA3;
-      box-shadow: 0 0 8px rgba(78, 204, 163, 0.5);
-      outline: none;
-    }
-    /* Styles from LadderPage for consistency */
-    .regenerate-controls {
-      margin-top: 12px; /* Consistent spacing */
-      padding-top: 8px; /* Reduced for tighter look */
-      border-top: 1px solid #eee;
-      text-align: center; /* Changed to center */
-    }
-    .regenerate-controls label { font-size: 0.8em; }
-    .regenerate-controls .bet-input { width: 55px; font-size: 0.8em; padding: 4px; }
-    .regenerate-controls .btn { font-size: 0.8em; padding: 4px 8px; }
-  </style>
 </head>
 <body>
 

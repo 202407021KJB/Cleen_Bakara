@@ -62,11 +62,6 @@
 </nav>
 
 <div class="container">
-  <div class="banner">
-    <h1>환영합니다 🎉</h1>
-    <p>오늘도 Cleen Bakara에서 즐거운 하루를!</p>
-  </div>
-
   <div id="gameCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -93,9 +88,17 @@
       </div>
     </div>
   </div>
-</div>
+  
+  <div class="qna-promo my-5 p-5 text-center" style="background-color: #f4f7f9; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+      <h2 style="color: #2c3e50; margin-bottom: 15px; font-weight: bold;">❓ 자주 묻는 질문 (Q&A)</h2>
+      <p class="text-muted" style="font-size: 1.1em; margin-bottom: 25px;">게임 이용 및 캐시 관련하여 궁금한 점을 바로 해결하실 수 있습니다.</p>
+      <a href="<%=request.getContextPath()%>/view/QnAPage.jsp" class="btn btn-primary btn-lg" 
+         style="background-color: #1abc9c; border-color: #1abc9c; font-weight: bold;">
+          Q&A 페이지로 이동하기
+      </a>
+  </div>
+  </div>
 
-<!-- 사다리 설정 모달 추가 -->
 <div class="modal fade" id="ladderModal" tabindex="-1" aria-labelledby="ladderModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -119,7 +122,6 @@
   </div>
 </div>
 
-<!-- 룰렛 설정 모달 추가 -->
 <div class="modal fade" id="rouletteModal" tabindex="-1" aria-labelledby="rouletteModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
