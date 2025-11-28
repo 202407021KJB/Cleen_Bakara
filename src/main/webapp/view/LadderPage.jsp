@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     String countStr = request.getParameter("animalCount");
-    int animalCount = 2; // Default to 2
+    int animalCount = 3; // Default to 3
     boolean isValid = true;
     if (countStr != null && !countStr.trim().isEmpty()) {
         try {
@@ -15,13 +15,12 @@
             isValid = false;
         }
     }
-    // 7마리 이상일 때 캔버스 너비 동적 조정
-    int canvasWidth = (animalCount >= 7) ? 800 + (animalCount - 6) * 100 : 800;
 %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>사다리 게임</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Ladder.css">
 </head>
@@ -59,7 +58,7 @@
        data-animal-count="<%=animalCount%>">
     
     <div id="ladder-container">
-      <canvas id="ladderCanvas" width="<%=canvasWidth%>" height="400"></canvas>
+      <canvas id="ladderCanvas" width="800" height="400"></canvas>
       <!-- Player inputs and result outputs will be injected here by JS -->
     </div>
     

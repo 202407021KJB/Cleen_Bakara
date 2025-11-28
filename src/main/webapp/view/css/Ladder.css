@@ -1,110 +1,25 @@
 @charset "UTF-8";
 
-/* 전체 페이지 스타일 */
+/* ========================================================= */
+/* 🎨 1. 기본 & 시각적 스타일 (레이아웃 없음) */
+/* ========================================================= */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin: 0;
     background-color: #f4f7f9;
     color: #333;
+    text-align: center;
+    padding: 20px;
 }
 
 h1 {
     color: #2c3e50;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
-/* 게임 전체를 감싸는 컨테이너 */
-#game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
+/* ========================================================= */
+/* 🕹️ 2. 컨트롤 및 입력 요소 */
+/* ========================================================= */
 
-/* 시작점(좌,우)과 결과(당첨,꽝) 영역의 스타일 */
-#player-inputs, #result-outputs {
-    display: flex;
-    justify-content: space-around;
-    width: 500px;
-}
-
-/* 원형 박스 스타일 */
-.player-box, .result-box {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%; /* 원형으로 변경 */
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    font-size: 16px;
-    font-weight: bold;
-    color: #34495e;
-    border: 2px solid #e0e0e0;
-    transition: all 0.3s ease;
-    cursor: pointer; /* 클릭 가능함을 표시 */
-}
-
-.player-box:hover {
-    transform: scale(1.05);
-    border-color: #3498db;
-}
-
-/* 원형 박스 안의 input 태그 스타일 */
-.player-box input, .result-box input {
-    width: 100%;
-    border: none;
-    background: transparent;
-    text-align: center;
-    font-size: 1em;
-    font-weight: bold;
-    color: inherit;
-    pointer-events: none; /* input 자체는 클릭되지 않도록 설정 */
-}
-
-/* 사다리가 그려질 캔버스 스타일 */
-#ladderCanvas {
-    border: 1px solid #e0e0e0;
-    border-radius: 12px; /* 둥근 모서리 */
-    background-color: #ffffff;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-/* 버튼 공통 스타일 */
-.btn {
-    padding: 12px 25px;
-    border: none;
-    background: #3498db;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    margin: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.1s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.btn:disabled {
-    background: #bdc3c7;
-    cursor: not-allowed;
-}
-
-.btn:not(:disabled):hover {
-    background: #2980b9;
-}
-
-.btn:not(:disabled):active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
-
-/* '로비로 가기' 버튼 스타일 */
 #lobby-btn {
     position: absolute;
     top: 20px;
@@ -115,70 +30,74 @@ h1 {
     text-decoration: none;
     border-radius: 8px;
     font-size: 14px;
-    transition: background-color 0.3s;
+    z-index: 100;
 }
-
 #lobby-btn:hover {
     background-color: #7f8c8d;
 }
 
-body { text-align: center; }
-h1 { margin-bottom: 15px !important; }
+.betting-box {
+  background: white;
+  padding: 15px 25px; 
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: inline-block; /* 자기 크기만큼만 차지하도록 */
+  margin-bottom: 20px; 
+}
 
-/* bet-input은 Ladder와 Roulette에서 모두 사용하며, 스타일이 중복된 부분입니다. */
+.regenerate-controls {
+  padding-top: 10px; 
+  border-top: 1px solid #eee;
+}
+
 .bet-input {
   border: 2px solid #ddd;
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 0.9em;
-  font-weight: bold;
   text-align: center;
   width: 80px;
-  transition: all 0.3s ease;
-  -moz-appearance: textfield;
-}
-.bet-input::-webkit-outer-spin-button,
-.bet-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.bet-input:focus {
-  /*
-  🚨 주의: 현재 이 색상(#4ECCA3)은 룰렛 페이지의 포커스 색상입니다.
-  사다리 게임은 원래 파란색(#3498db)을 사용했으나, 팀원의 코드가 이 색상이므로 그대로 유지합니다.
-  이 부분은 두 게임의 스타일 충돌을 유발할 수 있습니다.
-  */
-  border-color: #4ECCA3; 
-  box-shadow: 0 0 8px rgba(78, 204, 163, 0.5);
-  outline: none;
 }
 
-#replay-btn { display: none; margin-top: 15px; }
-#ladder-container { position: relative; }
-#game-container { display: inline-block; position: relative; }
+/* ========================================================= */
+/* 🪜 3. 사다리 및 아이콘 시각적 스타일 */
+/* ========================================================= */
 
-/* 캐시 표시 및 베팅 관련 상자 */
-.betting-box {
-  background: white;
-  padding: 10px 20px; 
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  text-align: center;
-  display: inline-block;
-  margin-bottom: 10px; 
+/* 시작/결과 아이콘(원형 박스) */
+.player-box, .result-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 2px solid #e0e0e0;
+    cursor: pointer;
+    z-index: 10;
 }
-.betting-box h3 {
-    font-size: 1.2rem; 
-    margin-bottom: 8px; 
+.player-box:hover {
+    border-color: #3498db;
 }
 
-/* 동물 수 변경 컨트롤 */
-.regenerate-controls {
-  margin-top: 8px; 
-  padding-top: 8px; 
-  border-top: 1px solid #eee;
-  text-align: right;
+/* 사다리 캔버스 */
+#ladderCanvas {
+    border-radius: 12px;
+    background-color: #fff;
 }
-.regenerate-controls label { font-size: 0.8em; }
-.regenerate-controls .bet-input { width: 55px; font-size: 0.8em; padding: 4px; }
-.regenerate-controls .btn { font-size: 0.8em; padding: 4px 8px; }
+
+/* ========================================================= */
+/* 📱 4. 모바일 반응형 (디자인만) */
+/* ========================================================= */
+@media (max-width: 768px) {
+    #lobby-btn {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .regenerate-controls {
+        display: none !important;
+    }
+}

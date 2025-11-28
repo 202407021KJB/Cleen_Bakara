@@ -4,6 +4,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>룰렛 게임</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Roulette.css">
 </head>
@@ -13,7 +14,7 @@
 
   <h1>🎡 룰렛 게임</h1>
 
-  <div style="background: white; padding: 15px; margin: 10px auto; width: 350px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+  <div class="betting-box">
     <%
         Object cashObj = session.getAttribute("cash");
         int currentCash = (cashObj != null) ? (Integer) cashObj : 0;

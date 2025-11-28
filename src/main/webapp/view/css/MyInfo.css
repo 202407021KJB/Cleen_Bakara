@@ -1,4 +1,4 @@
-/* MainPage.css, LoginPage.css와 스타일 통일 */
+/* MyInfo.css - Updated for Layout and Responsive */
 body {
     background-color: rgba(248, 249, 250, 0.9);
     font-family: "Noto Sans KR", sans-serif;
@@ -6,50 +6,47 @@ body {
     padding-top: 0;
 }
 
-/* 내비게이션 바 (MainPage와 동일) */
+/* 내비게이션 바 */
 .navbar {
     background-color: #2b2b2b;
-    padding: 40px 20px;
+    padding: 25px 30px; /* 패딩 조정 */
     width: 100%;
     display: flex;
     align-items: center;
-    box-sizing: border-box; /* 패딩 포함 너비 계산 */
+    box-sizing: border-box;
 }
 
+/* [FIX] 로고와 버튼을 양쪽 끝으로 정렬 */
 .container-fluid {
     display: flex;
     align-items: center;
     width: 100%;
-    justify-content: center;
-    position: relative;
+    justify-content: space-between; 
 }
 
+/* [FIX] 로고를 왼쪽 정렬로 변경 */
 .navbar-brand {
     color: white !important;
     font-size: 22px;
     font-weight: bold;
     text-decoration: none;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+    /* position: absolute 등 제거 */
 }
 
-/* 우측 메뉴 (버튼들) */
+/* [FIX] 우측 메뉴를 오른쪽 정렬로 변경 */
 .navbar-nav {
-    position: absolute;
-    right: 20px;
     display: flex;
     align-items: center;
     padding: 0;
     margin: 0;
     list-style: none;
+    gap: 10px; /* [FIX] 버튼 사이에 간격을 줌 */
 }
 
 .menu-btn {
     background: #444;
     padding: 8px 18px;
-    margin-left: 10px;
+    /* margin-left: 10px; REMOVED */
     border-radius: 25px;
     color: white !important;
     text-decoration: none;
@@ -66,9 +63,10 @@ body {
     padding: 40px;
     width: 100%;
     max-width: 500px;
-    margin: 50px auto; /* 중앙 정렬 */
+    margin: 50px auto;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
+    box-sizing: border-box; /* [FIX] 패딩이 너비에 포함되도록 설정 */
 }
 
 .info-container h2 {
@@ -96,7 +94,6 @@ body {
     font-size: 16px;
     box-sizing: border-box;
 }
-/* 읽기 전용 필드 스타일 */
 .input-group input[readonly] {
     background-color: #f8f9fa;
     color: #777;
@@ -133,3 +130,27 @@ body {
     cursor: pointer;
 }
 .delete-btn:hover { background-color: #c82333; }
+
+/* [NEW] 반응형 스타일 */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 20px;
+        flex-direction: column;
+        height: auto;
+    }
+    .navbar-brand {
+        margin-bottom: 15px;
+    }
+    .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .menu-btn { margin-top: 10px; }
+
+    .info-container {
+        width: 90%;
+        padding: 20px;
+        margin: 30px auto;
+    }
+}
