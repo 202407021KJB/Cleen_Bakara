@@ -5,13 +5,15 @@ import java.time.LocalDate;
 import model.Member;
 import model.MemberDAO; // DB 연결을 위해 import
 
-public class GamecashManager {
+public class GamecashManager 
+{
 
     private static final int JOIN_REWARD = 100_000;      // 회원가입 보상
     private static final int DAILY_LOGIN_REWARD = 10_000; // 매일 첫 로그인 보상
 
     // 회원가입 시 보너스 지급
-    public static void giveJoinReward(Member member, HttpSession session) {
+    public static void giveJoinReward(Member member, HttpSession session) 
+    {
     	// 캐시에 10만원을 추가하여 반영
         member.setCash(member.getCash() + JOIN_REWARD);
         session.setAttribute("cash", member.getCash());
@@ -22,12 +24,14 @@ public class GamecashManager {
     }
 
     // 오늘 첫 로그인인지 체크 후 1만 지급
-    public static void giveDailyLoginReward(Member member, HttpSession session) {
+    public static void giveDailyLoginReward(Member member, HttpSession session) 
+    {
         LocalDate today = LocalDate.now();
         LocalDate lastLogin = member.getLastLoginDate();
 
         // 첫 로그인 또는 날짜가 다르면 지급
-        if (lastLogin == null || !lastLogin.equals(today)) {
+        if (lastLogin == null || !lastLogin.equals(today)) 
+        {
             member.setCash(member.getCash() + DAILY_LOGIN_REWARD);
             member.setLastLoginDate(today);
             session.setAttribute("cash", member.getCash());
@@ -44,7 +48,8 @@ public class GamecashManager {
 
     // 게임 승리 캐시 지급
     public static void winGame(Member member, HttpSession session,
-                               int betAmount, double rate) {
+                               int betAmount, double rate) 
+    {
 
         int reward = (int)(betAmount * rate);
         member.setCash(member.getCash() + reward);
@@ -57,7 +62,8 @@ public class GamecashManager {
 
     // 게임 패배 캐시 차감
     public static void loseGame(Member member, HttpSession session,
-                                int betAmount) {
+                                int betAmount) 
+    {
 
         member.setCash(member.getCash() - betAmount);
         if (member.getCash() < 0) member.setCash(0);

@@ -13,15 +13,17 @@
 <meta charset="UTF-8">
 <title>공지사항 - Cleen Bakara</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- 공통 레이아웃 + 게시판 전용 스타일 -->
+<!-- 공통 CSS 및 공지사항 CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=2">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Notice.css?v=1">
+<!-- 부트스트랩 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 알림창 디자인 전용 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
-<!-- 1. 상단 내비게이션 바 (메인과 동일) -->
+<!-- 상단 내비게이션 바(메인 페이지와 동일) -->
 <nav class="navbar">
     <a class="navbar-brand" href="<%=request.getContextPath()%>/mainpage">
         🎮 Cleen Bakara
@@ -47,7 +49,7 @@
     </div>
 </nav>
 
-<!-- 2. 공지사항 목록 -->
+<!-- 공지사항 목록 -->
 <div class="notice-container">
     <div class="notice-header">
         <h2>📢 공지사항</h2>
@@ -64,7 +66,7 @@
             </tr>
         </thead>
         <tbody>
-            <!-- 게시글 클릭 시 NoticeRead.jsp로 이동 (id 파라미터 전달) -->
+            <!-- 게시글 클릭 시 NoticeRead.jsp로 이동 -->
             <tr class="notice-row" onclick="location.href='<%=request.getContextPath()%>/view/NoticeRead.jsp?id=5'">
                 <td>5</td>
                 <td class="title-col"><span class="notice-badge">점검</span> 11월 정기 서버 점검 안내</td>
@@ -103,10 +105,14 @@
     <p>JSP과제 | 조영록 | 김종범 | 문건우</p>
 </footer>
 
+<!-- Sweet Alert을 이용한 알림창 디자인 영역 -->
 <script>
 const CONTEXT_PATH = "<%=request.getContextPath()%>";
-function confirmLogout() {
-    Swal.fire({
+
+function confirmLogout() 
+{
+    Swal.fire
+    ({
         title: '로그아웃 하시겠습니까?',
         icon: 'question',
         showCancelButton: true,

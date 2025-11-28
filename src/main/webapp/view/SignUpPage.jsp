@@ -10,26 +10,32 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/SimpleCommon.css?v=1">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<!-- 클라이언트 측 유효성 검사 -->
+<!-- 보안에 취약하지만, SignUpController.java에서는 서버 측 검사를 해주고 있음 -->
 <script>
-function validateForm() {
+function validateForm() 
+{
     const id = document.getElementById("userID").value;
     const pw = document.getElementById("userPW").value;
     const nick = document.getElementById("nickname").value;
 
     const idRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,16}$/;
-    if (!idRegex.test(id)) {
+    if (!idRegex.test(id)) 
+    {
         Swal.fire('입력 오류', '아이디는 영문 포함 4~16자여야 합니다.', 'warning');
         return false;
     }
 
     const pwRegex = /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,20}$/;
-    if (!pwRegex.test(pw)) {
+    if (!pwRegex.test(pw)) 
+    {
         Swal.fire('입력 오류', '비밀번호는 특수문자 포함 6~20자여야 합니다.', 'warning');
         return false;
     }
 
     const nickRegex = /^[a-zA-Z가-힣]{2,12}$/;
-    if (!nickRegex.test(nick)) {
+    if (!nickRegex.test(nick)) 
+    {
         Swal.fire('입력 오류', '별명은 한글 또는 영문 2~12자여야 합니다.', 'warning');
         return false;
     }

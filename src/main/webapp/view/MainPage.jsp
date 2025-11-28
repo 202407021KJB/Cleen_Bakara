@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<!-- 로그인 여부 확인 -->
 <%
+	// 세션에서 닉네임, 아이디, 캐시 꺼냄
     String nickname = (String) session.getAttribute("saveName");
     String userID = (String) session.getAttribute("userID");
     Object cashObj = session.getAttribute("cash");
+    
+    // 캐시가 있다면 숫자로 변환, 없으면 NULL 처리(안전하게)
     int currentCash = (cashObj != null) ? (Integer) cashObj : 0;
+    
+    // 닉네임과 아이디가 둘 다 있다 -> 로그인
+    // 			  하나라도 없다 -> 비로그인
     boolean isLoggedIn = (nickname != null && userID != null);
 %>
 <!DOCTYPE html>
@@ -12,16 +19,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Cleen Bakara</title>
-<!-- 1. 부트스트랩 CSS -->
+<!-- 부트스트랩 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- 2. CSS 파일 연결 -->
+<!-- 공통 CSS 및 메인 페이지 전용 CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=1">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/MainPage.css?v=1">
 
-<!-- 3. 부트스트랩 JS -->
+<!-- 부트스트랩 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- 4. 예쁜 알림창(SweetAlert2) 라이브러리 -->
+<!-- 알림창 디자인 전용 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -35,6 +42,7 @@
     <div class="navbar-center">
         <a class="nav-link" onclick="scrollToGame()">게임참여</a>
         
+        <!-- 로그인이 되었다면 마이페이지가 보이고, 안했으면 안보임 -->
         <% if (isLoggedIn) { %>
             <a class="nav-link" href="<%=request.getContextPath()%>/view/MyInfo.jsp">마이페이지</a>
         <% } %>
@@ -43,6 +51,7 @@
     </div>
 
     <div class="navbar-right">
+    <!-- 로그인된 사용자는 별명과 함께 현재 갖고있는 캐시가 출력됨 -->
         <% if (isLoggedIn) { %>
             <div class="user-info">
                 <div>반갑습니다, <strong><%= nickname %></strong>님</div>
@@ -56,7 +65,7 @@
     </div>
 </nav>
 
-<!-- 메인 배너 (Carousel) -->
+<!-- 메인 배너(캐러셀) -->
 <div id="gameCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active"></button>
@@ -133,7 +142,7 @@
 
 </div>
 
-<!-- 게임 모달들 (생략 없이 그대로) -->
+<!-- 사다리와 룰렛의 배너를 각각 클릭하면, 얼마나 배팅할건지 창이 뜨게 됨 -->
 <div class="modal fade" id="ladderModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -184,16 +193,20 @@
  <p>JSP과제 | 조영록 | 김종범 | 문건우</p>
 </footer>
 
-<!-- ★ [추가된 부분] 일일 보상 및 알림 메시지 확인 스크립트 -->
+<!-- 일일 보상 및 알림 메시지 확인 스크립트 -->
 <%
-    // 세션에 'alertMsg'가 있는지 확인하고, 있으면 JS로 출력 후 바로 삭제합니다.
+    // 세션에 alertMsg가 있는지 확인하는 부분
     String alertMsg = (String) session.getAttribute("alertMsg");
-    if (alertMsg != null) {
-        session.removeAttribute("alertMsg"); // 새로고침 시 또 뜨지 않도록 삭제
+    if (alertMsg != null) 
+    {
+    	// 새로고침 했을때 또 뜨지 않게 바로 삭제
+        session.removeAttribute("alertMsg");
 %>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Swal.fire({
+        document.addEventListener("DOMContentLoaded", function() 
+
+            Swal.fire
+            ({
                 title: '🎁 출석 보상 지급!',
                 text: '<%= alertMsg %>',
                 icon: 'success',
@@ -206,13 +219,15 @@
     }
 %>
 
+<!-- Sweet Alert을 이용한 알림창 디자인 영역 -->
 <script>
 const CONTEXT_PATH = "<%=request.getContextPath()%>";
 const IS_LOGGED_IN = <%=isLoggedIn%>;
 
-// SweetAlert2를 적용한 예쁜 로그아웃 확인창
-function confirmLogout() {
-    Swal.fire({
+function confirmLogout() 
+{
+    Swal.fire
+    ({
         title: '로그아웃 하시겠습니까?',
         icon: 'question',
         showCancelButton: true,
@@ -221,33 +236,39 @@ function confirmLogout() {
         confirmButtonText: '로그아웃',
         cancelButtonText: '취소'
     }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed) 
+        {
             location.href = CONTEXT_PATH + "/logout";
         }
     });
 }
 
-function checkLoginAndOpenModal(modalId) {
+function checkLoginAndOpenModal(modalId) 
+{
     if (!IS_LOGGED_IN) {
-        // 로그인 안 했을 때도 예쁜 알림창
-        Swal.fire({
+        Swal.fire
+        ({
             title: '로그인이 필요합니다',
             text: '게임을 이용하시려면 먼저 로그인해주세요.',
             icon: 'warning',
             confirmButtonColor: '#004ea2',
             confirmButtonText: '로그인 하러가기'
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.isConfirmed) 
+            {
                 location.href = CONTEXT_PATH + "/view/LoginPage.jsp";
             }
         });
-    } else {
+    } 
+    else 
+    {
         const gameModal = new bootstrap.Modal(document.getElementById(modalId));
         gameModal.show();
     }
 }
 
-function scrollToGame() {
+function scrollToGame() 
+{
     document.getElementById('gameCarousel').scrollIntoView({ behavior: 'smooth' });
 }
 </script>
