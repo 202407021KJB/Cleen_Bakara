@@ -3,12 +3,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인 - Cleen Bakara</title>
-<!-- 1. 공통 레이아웃 (배경, 상단바 틀) -->
+<title>로그인</title>
+<!-- 공통 CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=1">
-<!-- 2. 박스 디자인 (SimpleCommon.css) -->
+<<!-- 메인 페이지와 달리 로그인 창은 상단 바에 로고만 들어있으면 되니, SimpleCommon.css 사용 -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/SimpleCommon.css?v=1">
-<!-- 3. 예쁜 알림창 -->
+<!-- 알림창 디자인 전용 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -18,14 +18,14 @@
     String error = request.getParameter("error");
 %>
 
-<!-- 1. 심플 내비게이션 바 (로고만 표시) -->
+<!-- 로그인 창에서는 상단 바에 로고만 표시 -->
 <nav class="navbar">
     <a class="navbar-brand" href="<%=request.getContextPath()%>/mainpage">
         🎮 Cleen Bakara
     </a>
 </nav>
 
-<!-- 2. 로그인 박스 -->
+<!-- 로그인 박스 -->
 <div class="auth-container">
     <h2 class="auth-title">로그인</h2>
 
@@ -48,13 +48,22 @@
     <p>JSP과제 | 조영록 | 김종범 | 문건우</p>
 </footer>
 
-<!-- 3. 알림 스크립트 (SweetAlert2) -->
+<!-- Sweet Alert을 이용한 알림창 디자인 영역 -->
 <script>
+	/** 조건에 따른 alert 창 띄워주기 로직
+	 *  Controller에서 View로 전달할 때, 주소 뒤에 꼬리표를 붙여서 보냄
+	 *  여기에서는 가입 성공했을 때, 실패했을 때, 로그인 필요, 세션 만료했을 때로 구분
+	 */
     const msg = "<%= (msgParam != null) ? msgParam : "" %>";
     const err = "<%= (error != null) ? error : "" %>";
 
-    if (msg === "join_success") {
-        Swal.fire({
+    /* 여기부터 상황별로 알림을 띄워주는 부분 */
+    
+    // 가입 성공시
+    if (msg === "join_success") 
+    {
+        Swal.fire
+        ({
             title: '가입 완료!',
             text: '회원가입을 축하합니다! 보너스 10만 캐시가 지급되었습니다.',
             icon: 'success',
@@ -62,16 +71,25 @@
         });
     }
 
-    if (err === "1") {
-        Swal.fire({
+    // 로그인 실패시
+    if (err === "1") 
+    {
+        Swal.fire
+        ({
             title: '로그인 실패',
             text: '아이디 또는 비밀번호가 일치하지 않습니다.',
             icon: 'error',
             confirmButtonColor: '#d33'
         });
-    } else if (err === "session") {
+    } 
+    // 세션 만료시
+    else if (err === "session") 
+    {
         Swal.fire('세션 만료', '다시 로그인해주세요.', 'warning');
-    } else if (err === "need_login") {
+    } 
+    // 로그인 필요시
+    else if (err === "need_login") 
+    {
         Swal.fire('로그인 필요', '게임 이용을 위해 로그인이 필요합니다.', 'warning');
     }
 </script>

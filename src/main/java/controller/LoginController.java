@@ -8,9 +8,15 @@ import model.Member;
 import model.MemberDAO;
 import controller.GamecashManager;
 
+// 매핑
 @WebServlet("/login")
 public class LoginController extends HttpServlet
 {
+	/** POST 요청 방식
+	 *  로그인, 회원가입, 회원탈퇴, 회원 정보 수정에서 다루어질 방식
+	 *  GET 방식과 달리 POST 방식은 주소창에 정보가 노출되지 않음
+	 *  보안성을 위해 사용하는 것
+	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
@@ -29,7 +35,8 @@ public class LoginController extends HttpServlet
          */
         if ("admin".equals(userID) && "1234".equals(userPW)) 
         {
-            if (dao.findMemberByID("admin") == null) {
+            if (dao.findMemberByID("admin") == null) 
+            {
                 Member admin = new Member("admin", "1234", "관리자");
                 admin.setCash(9999999); // 테스트용 캐시
                 dao.addMember(admin);

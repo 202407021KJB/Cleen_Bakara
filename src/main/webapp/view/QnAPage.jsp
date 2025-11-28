@@ -126,13 +126,15 @@
   <p>JSP 과제 | 조영록 | 김종범 | 문건우</p>
 </footer>
 
+<!-- Sweet Alert을 이용한 알림창 디자인 영역 -->
 <script>
 const CONTEXT_PATH = "<%=request.getContextPath()%>";
 const IS_LOGGED_IN = <%=isLoggedIn%>;
 
-// SweetAlert2 로그아웃 확인창
-function confirmLogout() {
-    Swal.fire({
+function confirmLogout() 
+{
+    Swal.fire
+    ({
         title: '로그아웃 하시겠습니까?',
         icon: 'question',
         showCancelButton: true,

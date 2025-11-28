@@ -12,11 +12,19 @@ import controller.GamecashManager;
 @WebServlet("/signup")
 public class SignUpController extends HttpServlet
 {
-    // 유효성 검사를 위한 정규 표현식 패턴 생성
+    /** 유효성 검사를 위한 정규 패턴을 생성
+     *  해당 유효성 검사는 서버 측 검사 방식
+     *  클라이언트 측에서 뚫려도 여기에서 한번 더 막아줌
+     */
     private static final Pattern ID_PATTERN = Pattern.compile("^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,16}$");
     private static final Pattern PW_PATTERN = Pattern.compile("^(?=.*[!@#$%^&*()_+{}\\[\\]:;<>,.?~\\\\/-]).{6,20}$");
     private static final Pattern NICKNAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣]{2,12}$");
 
+	/** POST 요청 방식
+	 *  로그인, 회원가입, 회원탈퇴, 회원 정보 수정에서 다루어질 방식
+	 *  GET 방식과 달리 POST 방식은 주소창에 정보가 노출되지 않음
+	 *  보안성을 위해 사용하는 것
+	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException
     {
@@ -44,7 +52,8 @@ public class SignUpController extends HttpServlet
          * 존재를 한다면, "이미 존재하는 아이디입니다." alert 창 출력
          * history.back()으로 이전 페이지로 다시 이동(회원가입 창으로)
          */
-        if (dao.findMemberByID(userID) != null) {
+        if (dao.findMemberByID(userID) != null) 
+        {
             response.setContentType("text/html; charset=UTF-8");
             response.getWriter().println("<script>");
             response.getWriter().println("alert('이미 존재하는 아이디입니다.');");
@@ -58,7 +67,8 @@ public class SignUpController extends HttpServlet
          * 존재를 한다면, "이미 존재하는 별명입니다." alert 창 출력
          * history.back() 으로 이전 페이지로 다시 이동(회원가입 창으로)
          */
-        if (dao.findMemberByNickname(nickname) != null) {
+        if (dao.findMemberByNickname(nickname) != null) 
+        {
             response.setContentType("text/html; charset=UTF-8");
             response.getWriter().println("<script>");
             response.getWriter().println("alert('이미 존재하는 별명입니다.');");

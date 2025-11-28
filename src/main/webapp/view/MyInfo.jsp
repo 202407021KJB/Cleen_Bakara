@@ -28,15 +28,16 @@
 <title>마이페이지 - Cleen Bakara</title>
 <!-- 부트스트랩 (레이아웃용) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- 1. 공통 레이아웃 -->
+<!-- 공통 CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=1">
-<!-- 2. 박스 디자인 (SimpleCommon.css) -->
+<!-- 박스 디자인 (SimpleCommon.css) -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/SimpleCommon.css?v=1">
+<!-- 알림창 디자인 전용 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
-<!-- 1. 전체 내비게이션 바 (메인 페이지와 동일하게 적용) -->
+<!-- 상단 내비게이션 바(메인 페이지와 동일) -->
 <nav class="navbar">
     <a class="navbar-brand" href="<%=request.getContextPath()%>/mainpage">
         🎮 Cleen Bakara
@@ -56,7 +57,7 @@
     </div>
 </nav>
 
-<!-- 2. 내 정보 박스 -->
+<!-- 내 정보 박스 -->
 <div class="info-container">
     <div class="info-header">
         <h2>내 정보 수정</h2>
@@ -98,11 +99,14 @@
     <p>JSP과제 | 조영록 | 김종범 | 문건우</p>
 </footer>
 
+<!-- Sweet Alert을 이용한 알림창 디자인 영역 -->
 <script>
 const CONTEXT_PATH = "<%=request.getContextPath()%>";
 
-function confirmLogout() {
-    Swal.fire({
+function confirmLogout() 
+{
+    Swal.fire
+    ({
         title: '로그아웃',
         text: '정말 로그아웃 하시겠습니까?',
         icon: 'question',
@@ -116,8 +120,10 @@ function confirmLogout() {
     });
 }
 
-function confirmDelete() {
-    Swal.fire({
+function confirmDelete() 
+{
+    Swal.fire
+    ({
         title: '회원 탈퇴',
         text: '정말 탈퇴하시겠습니까? 모든 캐시 정보가 삭제됩니다.',
         icon: 'warning',
