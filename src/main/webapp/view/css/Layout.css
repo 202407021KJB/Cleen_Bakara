@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+/* ========================================================= */
+/* 🌍 1. 공통 레이아웃 및 폰트 */
+/* ========================================================= */
+body {
+    background-color: #f8f9fa; /* 공통 배경색 */
+    font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+    margin: 0;
+    padding-top: 80px; /* 상단 고정 바 높이만큼 여백 */
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; padding: 0; margin: 0; }
+
+/* ========================================================= */
+/* 🧭 2. 상단 내비게이션 바 (Sticky Navbar) */
+/* ========================================================= */
+.navbar {
+    background-color: #ffffff;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #e1e1e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+/* 좌측 로고 */
+.navbar-brand {
+    font-size: 24px;
+    font-weight: 900;
+    color: #004ea2 !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 중앙 메뉴 */
+.navbar-center {
+    display: flex;
+    gap: 40px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-link {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+.nav-link:hover { color: #004ea2; }
+
+/* 우측 로그인/정보 */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info { font-size: 14px; text-align: right; line-height: 1.2; }
+.user-info strong { color: #004ea2; }
+.user-cash { color: #f39c12; font-weight: bold; }
+
+.auth-btn {
+    background-color: #004ea2;
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+.auth-btn:hover { background-color: #003375; }
+.logout-btn { background-color: #666; }
+.logout-btn:hover { background-color: #444; }
+
+/* ========================================================= */
+/* 🦶 3. 푸터 (Footer) - 중앙 정렬 수정 완료 */
+/* ========================================================= */
+footer {
+    margin-top: auto; /* 화면 내용이 짧아도 푸터는 항상 바닥에 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    padding: 40px 0;
+    color: #888;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e1e1e1;
+    font-size: 14px;
+    width: 100%;
+}

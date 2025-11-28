@@ -12,6 +12,7 @@ public class GamecashManager {
 
     // 회원가입 시 보너스 지급
     public static void giveJoinReward(Member member, HttpSession session) {
+    	// 캐시에 10만원을 추가하여 반영
         member.setCash(member.getCash() + JOIN_REWARD);
         session.setAttribute("cash", member.getCash());
 
@@ -62,7 +63,7 @@ public class GamecashManager {
         if (member.getCash() < 0) member.setCash(0);
         session.setAttribute("cash", member.getCash());
 
-        // [DB 저장 추가] 게임 패배 후 줄어든 캐시 DB 저장
+        // 게임 패배 후 줄어든 캐시 DB 저장
         MemberDAO dao = new MemberDAO();
         dao.updateCashAndDate(member);
     }

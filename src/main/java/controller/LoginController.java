@@ -16,15 +16,17 @@ public class LoginController extends HttpServlet
     {
         request.setCharacterEncoding("UTF-8");
 
-        // 1. 입력값 받아오기
+        // getParameter로 입력값을 받아오기
         String userID = request.getParameter("userID");
         String userPW = request.getParameter("userPW");
         
         MemberDAO dao = new MemberDAO();
 
-        // 2. 관리자 계정 (admin / 1234) 특수 처리
-        // 사용자가 'admin' / '1234'로 로그인을 시도하면, 
-        // 서버 메모리에 해당 계정이 없을 경우 즉시 생성하여 로그인 가능하게 함
+        /*** 테스트를 위한 관리자 계정 생성
+         * admin, 1234로 로그인을 시도하면
+         * DB에 자동적으로 아이디, 비번이 저장됨
+         * 캐시도 9999999로 지급
+         */
         if ("admin".equals(userID) && "1234".equals(userPW)) 
         {
             if (dao.findMemberByID("admin") == null) {
@@ -34,17 +36,16 @@ public class LoginController extends HttpServlet
             }
         }
 
-        // 3. DAO를 사용하여 회원 조회
-        // (관리자면 위에서 생성되었으므로 조회 성공, 일반 회원은 가입되어 있다면 조회 성공)
+        // 회원 조회
         Member member = dao.findMember(userID, userPW);
 
-        // 4. 로그인 유효성 확인
+        // 로그인 유효성 확인
         if (member != null)
         {
-            // 로그인 성공 시
+            // 세션 처리
             HttpSession session = request.getSession();
             
-            // 세션 속성 설정
+            // 세션에 로그인 정보 저장
             session.setAttribute("userID", member.getUserID()); 
             session.setAttribute("saveName", member.getNickname());
             session.setAttribute("cash", member.getCash()); 

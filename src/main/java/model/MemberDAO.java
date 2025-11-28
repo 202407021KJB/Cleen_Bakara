@@ -5,10 +5,11 @@ import java.time.LocalDate;
 
 public class MemberDAO {
 	
-	/** DB 연결 정보
-	 * DB_URL : DB 담긴 주소
-	 * DB_ID  : MySQL 아이디임
-	 * DB_PW  : MySQL 비밀번호임
+	/** DB 연결 정보(MySQL)
+	 *  DB_URL : 데이터베이스에 연결하기 위한 접속 URL
+	 *  DB_ID  : MySQL에서 사용되는 아이디
+	 *  DB_PW  : MySQL에서 사용되는 비밀번호
+	 *  해당 ID, PW로 접속해야 가능
 	 */
     private static final String DB_URL = "jdbc:mysql://localhost:3306/bakara_db?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8";
     private static final String DB_ID = "root";
@@ -20,7 +21,6 @@ public class MemberDAO {
         return DriverManager.getConnection(DB_URL, DB_ID, DB_PW);
     }
 
-    // MySQL 이용 했습니다
     // 회원가입
     public void addMember(Member member) {
         String sql = "INSERT INTO member (userID, userPW, nickname, cash, lastLoginDate) VALUES (?, ?, ?, ?, ?)";
@@ -33,7 +33,6 @@ public class MemberDAO {
             pstmt.setString(3, member.getNickname());
             pstmt.setInt(4, member.getCash());
             
-            // LocalDate -> java.sql.Date 변환
             if (member.getLastLoginDate() != null) {
                 pstmt.setDate(5, java.sql.Date.valueOf(member.getLastLoginDate()));
             } else {
@@ -47,7 +46,7 @@ public class MemberDAO {
         }
     }
 
-    // 아이디로 회원 찾을 것임
+    // 아이디로 회원 찾기 (중복 검사용)
     public Member findMemberByID(String id) {
         String sql = "SELECT * FROM member WHERE userID = ?";
         Member member = null;
@@ -66,7 +65,6 @@ public class MemberDAO {
                     );
                     member.setCash(rs.getInt("cash"));
                     
-                    // java.sql.Date -> LocalDate 변환
                     Date date = rs.getDate("lastLoginDate");
                     if (date != null) {
                         member.setLastLoginDate(date.toLocalDate());
@@ -78,8 +76,34 @@ public class MemberDAO {
         }
         return member;
     }
+
+    // 닉네임으로 회원 찾기 (중복 검사용)
+    public Member findMemberByNickname(String nickname) {
+        String sql = "SELECT * FROM member WHERE nickname = ?";
+        Member member = null;
+        
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, nickname);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    member = new Member(
+                        rs.getString("userID"),
+                        rs.getString("userPW"),
+                        rs.getString("nickname")
+                    );
+                    // 중복 확인용이므로 나머지 정보는 필요 시 세팅
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return member;
+    }
     
-    // 로그인 확인용
+    // 로그인 확인용 (아이디 & 비번)
     public Member findMember(String id, String pw) {
         String sql = "SELECT * FROM member WHERE userID = ? AND userPW = ?";
         Member member = null;
@@ -123,7 +147,7 @@ public class MemberDAO {
             pstmt.setString(3, id);
             
             int result = pstmt.executeUpdate();
-            return result > 0; // 1개 이상 수정되면 성공
+            return result > 0;
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,9 +155,7 @@ public class MemberDAO {
         }
     }
     
-    // [캐시 및 접속일 업데이트] (중요! 게임 결과 저장용 메서드 추가 필요)
-    // GamecashManager 등에서 호출할 수 있도록 캐시 업데이트 기능이 필요합니다.
-    // 기존 코드에서는 객체만 수정하면 되었지만, DB 버전에서는 반드시 'UPDATE' 쿼리를 날려야 저장됩니다.
+    // 캐시 및 접속일 업데이트
     public void updateCashAndDate(Member member) {
         String sql = "UPDATE member SET cash = ?, lastLoginDate = ? WHERE userID = ?";
         
