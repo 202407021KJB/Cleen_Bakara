@@ -1,0 +1,146 @@
+@charset "UTF-8";
+
+/* ========================================================= */
+/* 🔑 로그인 & 회원가입 전용 스타일 (Auth) */
+/* ========================================================= */
+.auth-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 80px auto; /* 중앙 배치 */
+    padding: 40px;
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.auth-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #004ea2; /* 테마 컬러 */
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #004ea2;
+    outline: none;
+}
+
+/* 공통 버튼 스타일 */
+.submit-btn, .update-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #004ea2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover, .update-btn:hover {
+    background-color: #003375;
+}
+
+.register-link {
+    display: block;
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.register-link:hover {
+    color: #004ea2;
+    text-decoration: underline;
+}
+
+/* ========================================================= */
+/* 👤 마이페이지 전용 스타일 (MyInfo) */
+/* ========================================================= */
+.info-container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.info-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.info-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.form-group input[readonly] {
+    background-color: #f8f9fa;
+    color: #777;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.btn-update {
+    flex: 1; /* 버튼 꽉 채우기 */
+}
+
+.btn-delete {
+    padding: 12px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}

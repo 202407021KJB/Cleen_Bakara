@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+/* 게시판 컨테이너 */
+.notice-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 40px;
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.notice-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.notice-header h2 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #004ea2; /* 테마 컬러 */
+    margin-bottom: 10px;
+}
+
+/* 📋 게시판 테이블 스타일 */
+.notice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.notice-table th {
+    background-color: #f8f9fa;
+    border-top: 2px solid #333;
+    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.notice-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    text-align: center;
+}
+
+/* 제목은 왼쪽 정렬 */
+.notice-table td.title-col {
+    text-align: left;
+    color: #333;
+    font-weight: 500;
+}
+
+/* 마우스 올렸을 때 효과 */
+.notice-table tr.notice-row:hover {
+    background-color: #f1f8ff; /* 아주 연한 파란색 */
+    cursor: pointer;
+}
+
+.notice-badge {
+    background: #004ea2;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+/* 📄 상세 페이지 (Read) 스타일 */
+.read-header {
+    border-bottom: 2px solid #e1e1e1;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.read-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.read-meta {
+    font-size: 14px;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+}
+
+.read-content {
+    min-height: 300px;
+    line-height: 1.8;
+    color: #444;
+    padding: 20px;
+    background-color: #fcfcfc;
+    border-radius: 8px;
+    border: 1px solid #f1f1f1;
+}
+
+.btn-list {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #666;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-top: 30px;
+    transition: background 0.3s;
+}
+
+.btn-list:hover {
+    background-color: #444;
+    color: white;
+}

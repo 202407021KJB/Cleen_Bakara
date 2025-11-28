@@ -1,116 +1,151 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%
-    // 세션 정보 확인
     String nickname = (String) session.getAttribute("saveName");
     String userID = (String) session.getAttribute("userID");
-    Object cashObj = session.getAttribute("cash"); // 캐시 가져오기
-    
-    // 캐시가 null이면 0으로 처리 (안전장치)
+    Object cashObj = session.getAttribute("cash");
     int currentCash = (cashObj != null) ? (Integer) cashObj : 0;
-    
     boolean isLoggedIn = (nickname != null && userID != null);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Welcome - Cleen Bakara</title>
+<title>Cleen Bakara</title>
+<!-- 1. 부트스트랩 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/MainPage.css">
+
+<!-- 2. CSS 파일 연결 -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=1">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/MainPage.css?v=1">
+
+<!-- 3. 부트스트랩 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 4. 예쁜 알림창(SweetAlert2) 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="<%=request.getContextPath()%>/mainpage">🎮 Cleen Bakara</a>
+<!-- 상단 내비게이션 바 -->
+<nav class="navbar">
+    <a class="navbar-brand" href="<%=request.getContextPath()%>/mainpage">
+        🎮 Cleen Bakara
+    </a>
 
-    <ul class="navbar-nav ms-auto">
-      
-      <li class="nav-item d-flex align-items-center">
+    <div class="navbar-center">
+        <a class="nav-link" onclick="scrollToGame()">게임참여</a>
+        
         <% if (isLoggedIn) { %>
-            <div style="text-align: right; margin-right: 15px; line-height: 1.2;">
-                <span class="navbar-text" style="display: block; padding: 0; font-size: 14px;">
-                    안녕하세요, <strong><%= nickname %></strong> 님
-                </span>
-                <span class="navbar-text" style="display: block; padding: 0; font-size: 13px; color: #f1c40f !important;">
-                    💰 <strong><%= String.format("%,d", currentCash) %></strong> 원
-                </span>
-            </div>
-        <% } else { %>
-            <span class="navbar-text me-3">로그인 후 이용해 주세요.</span>
+            <a class="nav-link" href="<%=request.getContextPath()%>/view/MyInfo.jsp">마이페이지</a>
         <% } %>
-      </li>
+        
+        <a class="nav-link" href="<%=request.getContextPath()%>/view/QnAPage.jsp">고객센터(QnA)</a>
+    </div>
 
-      <% if (isLoggedIn) { %>
-        <li class="nav-item">
-          <a class="menu-btn" href="<%=request.getContextPath()%>/view/MyInfo.jsp">마이페이지</a>
-        </li>
-        <li class="nav-item">
-          <a class="menu-btn" href="#" onclick="confirmLogout()">로그아웃</a>
-        </li>
-      <% } else { %>
-        <li class="nav-item">
-          <a class="menu-btn" href="<%=request.getContextPath()%>/view/LoginPage.jsp">로그인</a>
-        </li>
-        <li class="nav-item">
-          <a class="menu-btn" href="<%=request.getContextPath()%>/view/SignUpPage.jsp">회원가입</a>
-        </li>
-      <% } %>
-    </ul>
-  </div>
+    <div class="navbar-right">
+        <% if (isLoggedIn) { %>
+            <div class="user-info">
+                <div>반갑습니다, <strong><%= nickname %></strong>님</div>
+                <div class="user-cash"><%= String.format("%,d", currentCash) %> 원</div>
+            </div>
+            <a class="auth-btn logout-btn" href="#" onclick="confirmLogout()">로그아웃</a>
+        <% } else { %>
+            <a class="auth-btn" href="<%=request.getContextPath()%>/view/LoginPage.jsp">로그인</a>
+            <a class="auth-btn logout-btn" href="<%=request.getContextPath()%>/view/SignUpPage.jsp">회원가입</a>
+        <% } %>
+    </div>
 </nav>
 
-<div class="container">
-  <div id="gameCarousel" class="carousel slide" data-bs-ride="carousel">
+<!-- 메인 배너 (Carousel) -->
+<div id="gameCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="1"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <a href="#" onclick="checkLoginAndOpenModal('ladderModal')">
-          <img src="<%=request.getContextPath()%>/view/img/LadderImg.png" class="d-block w-100" alt="사다리 게임">
-        </a>
-        <div class="carousel-caption">
-          <h3>🪜 사다리 타기</h3>
-          <p>운명을 결정짓는 짜릿한 사다리!</p>
+        <div class="carousel-item active">
+            <a href="#" onclick="checkLoginAndOpenModal('ladderModal')">
+                <img src="<%=request.getContextPath()%>/view/img/LadderImg.png" class="d-block w-100" alt="사다리 게임">
+            </a>
+            <div class="carousel-caption">
+                <h3>🪜 사다리 타기</h3>
+                <p>당신의 선택이 운명을 결정합니다.</p>
+            </div>
         </div>
-      </div>
-      <div class="carousel-item">
-        <a href="#" onclick="checkLoginAndOpenModal('rouletteModal')">
-          <img src="<%=request.getContextPath()%>/view/img/RouletteImg.png" class="d-block w-100" alt="룰렛 게임">
-        </a>
-        <div class="carousel-caption">
-          <h3>🎡 룰렛 게임</h3>
-          <p>돌려라! 당신의 행운을 시험해보세요!</p>
+        <div class="carousel-item">
+            <a href="#" onclick="checkLoginAndOpenModal('rouletteModal')">
+                <img src="<%=request.getContextPath()%>/view/img/RouletteImg.png" class="d-block w-100" alt="룰렛 게임">
+            </a>
+            <div class="carousel-caption">
+                <h3>🎡 행운의 룰렛</h3>
+                <p>돌려라! 대박의 기회!</p>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  
-  <div class="qna-promo my-5 p-5 text-center" style="background-color: #f4f7f9; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
-      <h2 style="color: #2c3e50; margin-bottom: 15px; font-weight: bold;">❓ 자주 묻는 질문 (Q&A)</h2>
-      <p class="text-muted" style="font-size: 1.1em; margin-bottom: 25px;">게임 이용 및 캐시 관련하여 궁금한 점을 바로 해결하실 수 있습니다.</p>
-      <a href="<%=request.getContextPath()%>/view/QnAPage.jsp" class="btn btn-primary btn-lg" 
-         style="background-color: #1abc9c; border-color: #1abc9c; font-weight: bold;">
-          Q&A 페이지로 이동하기
-      </a>
-  </div>
-  </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+</div>
 
-<div class="modal fade" id="ladderModal" tabindex="-1" aria-labelledby="ladderModalLabel" aria-hidden="true">
+<!-- 하단 콘텐츠 영역 -->
+<div class="content-wrapper">
+    
+    <!-- 좌측 공지사항 -->
+    <div class="board-section">
+        <div class="section-header">
+            <span class="section-title">📢 공지사항</span>
+            <a href="<%=request.getContextPath()%>/view/NoticePage.jsp" class="more-btn">더보기 +</a>
+        </div>
+        <ul class="board-list">
+            <li onclick="location.href='<%=request.getContextPath()%>/view/NoticePage.jsp'">
+                <span>[점검] 11월 정기 서버 점검 안내</span>
+                <span class="date">2025.11.27</span>
+            </li>
+            <li onclick="location.href='<%=request.getContextPath()%>/view/NoticePage.jsp'">
+                <span>[이벤트] 신규 가입자 10만 캐시 지급!</span>
+                <span class="date">2025.11.26</span>
+            </li>
+            <li>
+                <span>[안내] 불법 프로그램 사용 제재 명단</span>
+                <span class="date">2025.11.20</span>
+            </li>
+            <li>
+                <span>[업데이트] 룰렛 게임 배당률 상향 조정</span>
+                <span class="date">2025.11.15</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 우측 고객센터 -->
+    <div class="board-section" style="background: #f8f9fa;">
+        <div class="qna-banner">
+            <h3 style="font-weight:bold; margin-bottom:10px;">❓ 고객센터</h3>
+            <p class="qna-text">게임 이용 중 궁금한 점이 있으신가요?<br>자주 묻는 질문을 확인해보세요.</p>
+            <a href="<%=request.getContextPath()%>/view/QnAPage.jsp" class="qna-btn">1:1 문의 / QnA 바로가기</a>
+            <div style="margin-top: 20px; font-size: 24px; font-weight: 900; color: #004ea2;">
+                📞 1588 - 0000
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 게임 모달들 (생략 없이 그대로) -->
+<div class="modal fade" id="ladderModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ladderModalLabel">🪜 사다리 게임 설정</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">🪜 사다리 게임 설정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <form id="ladderSetupForm" action="<%=request.getContextPath()%>/view/LadderPage.jsp" method="GET">
-          <div class="mb-3">
-            <label for="animalCountInput" class="form-label">동물 마리 수를 입력하세요 (2~10마리):</label>
-            <input type="number" class="form-control" id="animalCountInput" name="animalCount" min="2" max="10" value="3" required>
+           <div class="mb-3">
+            <label class="form-label">동물 마리 수 (2~10):</label>
+            <input type="number" class="form-control" name="animalCount" min="2" max="10" value="3" required>
           </div>
         </form>
       </div>
@@ -122,18 +157,18 @@
   </div>
 </div>
 
-<div class="modal fade" id="rouletteModal" tabindex="-1" aria-labelledby="rouletteModalLabel" aria-hidden="true">
+<div class="modal fade" id="rouletteModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="rouletteModalLabel">🎡 룰렛 게임 설정</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">🎡 룰렛 게임 설정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <form id="rouletteSetupForm" action="<%=request.getContextPath()%>/roulette" method="GET">
           <div class="mb-3">
-            <label for="fruitCountInput" class="form-label">과일 개수를 입력하세요 (2~10개):</label>
-            <input type="number" class="form-control" id="fruitCountInput" name="fruitCount" min="2" max="10" value="2" required>
+             <label class="form-label">과일 개수 (2~10):</label>
+            <input type="number" class="form-control" name="fruitCount" min="2" max="10" value="2" required>
           </div>
         </form>
       </div>
@@ -146,27 +181,74 @@
 </div>
 
 <footer>
-  <p>JSP 과제 | 조영록 | 문건우 | 김종범</p>
+ <p>JSP과제 | 조영록 | 김종범 | 문건우</p>
 </footer>
+
+<!-- ★ [추가된 부분] 일일 보상 및 알림 메시지 확인 스크립트 -->
+<%
+    // 세션에 'alertMsg'가 있는지 확인하고, 있으면 JS로 출력 후 바로 삭제합니다.
+    String alertMsg = (String) session.getAttribute("alertMsg");
+    if (alertMsg != null) {
+        session.removeAttribute("alertMsg"); // 새로고침 시 또 뜨지 않도록 삭제
+%>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: '🎁 출석 보상 지급!',
+                text: '<%= alertMsg %>',
+                icon: 'success',
+                confirmButtonColor: '#004ea2',
+                confirmButtonText: '감사합니다!'
+            });
+        });
+    </script>
+<%
+    }
+%>
 
 <script>
 const CONTEXT_PATH = "<%=request.getContextPath()%>";
 const IS_LOGGED_IN = <%=isLoggedIn%>;
 
+// SweetAlert2를 적용한 예쁜 로그아웃 확인창
 function confirmLogout() {
-    if (confirm("정말 로그아웃 하시겠습니까?")) {
-        location.href = CONTEXT_PATH + "/logout";
-    }
+    Swal.fire({
+        title: '로그아웃 하시겠습니까?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#004ea2',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '로그아웃',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            location.href = CONTEXT_PATH + "/logout";
+        }
+    });
 }
 
 function checkLoginAndOpenModal(modalId) {
     if (!IS_LOGGED_IN) {
-        alert("로그인이 필요한 서비스입니다.");
-        location.href = CONTEXT_PATH + "/view/LoginPage.jsp";
+        // 로그인 안 했을 때도 예쁜 알림창
+        Swal.fire({
+            title: '로그인이 필요합니다',
+            text: '게임을 이용하시려면 먼저 로그인해주세요.',
+            icon: 'warning',
+            confirmButtonColor: '#004ea2',
+            confirmButtonText: '로그인 하러가기'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = CONTEXT_PATH + "/view/LoginPage.jsp";
+            }
+        });
     } else {
         const gameModal = new bootstrap.Modal(document.getElementById(modalId));
         gameModal.show();
     }
+}
+
+function scrollToGame() {
+    document.getElementById('gameCarousel').scrollIntoView({ behavior: 'smooth' });
 }
 </script>
 </body>

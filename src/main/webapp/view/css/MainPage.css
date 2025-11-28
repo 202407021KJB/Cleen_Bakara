@@ -1,187 +1,138 @@
-/* 전체 배경 */
-body 
-{
-    /* 배경 투명도 유지 */
-    background-color: rgba(248, 249, 250, 0.9); 
-    background-image: none;
-    font-family: "Noto Sans KR", sans-serif;
-    padding-top: 0; 
-}
-
-/* 🚩 내비게이션 바 (정렬 개선) */
-.navbar 
-{
-    background-color: #2b2b2b;
-    /* 💡 수정: 상하 패딩을 20px로 늘려, 버튼 위아래 여백을 확보하고 높이를 충분히 증가 */
-    padding: 40px 20px; 
-    display: flex;
-    align-items: center;
-}
-
-/* 💡 로고 중앙 정렬을 위한 컨테이너-플루이드 내부 정렬 */
-.container-fluid {
-    display: flex;
-    align-items: center;
+@charset "UTF-8";
+/* ========================================================= */
+/* 3. 메인 배너 (Carousel) */
+/* ========================================================= */
+#gameCarousel {
     width: 100%;
-    /* 💡 로고를 포함한 모든 요소를 중앙에 배치하기 위해 center로 변경 */
-    justify-content: center; 
+    max-width: 1200px; /* 너무 넓어지는 것 방지 */
+    margin: 20px auto 40px auto; /* 상하 여백 */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* 💡 로고 스타일 */
-.navbar-brand 
-{
-    color: white !important;
-    font-size: 22px;
-    font-weight: bold;
-    /* 💡 중앙 로고를 메뉴와 분리하고 가운데 정렬하기 위해 절대 위치 사용 */
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    /* 로고가 메뉴 위에 뜨도록 z-index 설정 */
-    z-index: 10;
+.carousel-item {
+    height: 450px; /* 배너 높이 키움 */
+    background-color: #000; /* 이미지 로딩 전 배경 */
 }
 
-/* 💡 우측 메뉴 컨테이너 위치 고정 */
-.navbar-nav 
-{
-    /* 💡 우측 끝에 고정되도록 ms-auto 대신 absolute 사용 */
-    position: absolute;
-    right: 20px; /* 우측 여백 */
-    
-    display: flex;
-    align-items: center;
-    margin: 0 !important;
-    padding: 0;
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지 비율 유지하며 꽉 채우기 */
+    opacity: 0.9;
 }
 
-/* 우측 문구 */
-.navbar-text 
-{
-    color: white !important;
-    display: flex;
-    align-items: center;
-    margin-right: 15px !important;
-}
-
-/* 🗑️ 검색창(구글 기반 스타일) 섹션 전체 제거 */
-
-/* 마이페이지, 로그아웃 버튼 */
-.menu-btn
-{
-    background: #444;
-    padding: 8px 18px;
-    margin-left: 10px;
-    border-radius: 25px;
-    color: white !important;
-    text-decoration: none;
-    font-size: 15px;
-    transition: 0.2s;
-}
-
-.menu-btn:hover
-{
-    background: #666;
-}
-
-/* ----------------------------------------------------- */
-/* 🚩 캐러셀 영역 수정 (양쪽 여백 복원) */
-/* ----------------------------------------------------- */
-
-/* 🚨 수정: .container에 대한 전체 너비 설정을 제거하여 Bootstrap 기본 중앙 정렬을 사용합니다. */
-.container {
-    /* Bootstrap의 기본 설정 사용 */
-    margin-top: 30px; /* 상단 여백 복원 */
-}
-
-/* 환영 배너 */
-.banner
-{
-    background: linear-gradient(135deg, #007bff, #6610f2);
-    color: white;
+.carousel-caption {
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px 20px;
     text-align: center;
-    padding: 60px 0;
-    /* 🚨 수정: 둥근 모서리를 복원합니다. */
-    border-radius: 12px; 
-    margin: 0 0 20px 0; 
 }
 
-/* 🚩 캐러셀 컨테이너 (Carousel 자체) */
-#gameCarousel 
-{
-    width: auto; 
-    margin-top: 0 !important;
-    height: 400px;
-    overflow: hidden; 
+/* 🟢 배너 인디케이터 (동그라미) 수정 */
+.carousel-indicators {
+    margin-bottom: 20px;
+}
+.carousel-indicators button {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important; /* 완벽한 원형 */
+    background-color: rgba(255,255,255,0.5) !important;
+    border: none !important;
+    margin: 0 6px !important;
+    opacity: 1 !important;
+    transition: all 0.3s;
+}
+.carousel-indicators button.active {
+    background-color: #fff !important;
+    transform: scale(1.2); /* 활성화 시 약간 커짐 */
 }
 
-/* 캐러셀 내부 이미지 및 아이템 스타일 */
-.carousel-item img 
-{
-    width: 100%;
-    height: 400px; 
-    /* 🚨 수정: 둥근 모서리를 복원합니다. */
-    border-radius: 12px; 
-    object-fit: cover;
-    transition: transform 0.4s ease;
+
+/* ========================================================= */
+/* 4. 하단 콘텐츠 영역 (공지사항 & QnA) */
+/* ========================================================= */
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    display: flex;
+    gap: 30px; /* 좌우 패널 간격 */
+    padding: 0 20px;
+}
+
+.board-section {
+    flex: 1; /* 1:1 비율로 분할 */
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #333; /* 제목 밑 굵은 선 */
+    padding-bottom: 10px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #333;
+}
+
+.more-btn {
+    font-size: 12px;
+    color: #888;
+}
+
+/* 리스트 스타일 */
+.board-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    color: #555;
     cursor: pointer;
 }
-
-.carousel-item img:hover 
-{
-    transform: scale(1.02);
+.board-list li:hover {
+    color: #004ea2;
+    background-color: #fcfcfc;
 }
+.date { font-size: 13px; color: #999; }
 
-.carousel-caption 
-{
-    background: rgba(0,0,0,0.55);
-    /* 🚨 수정: 둥근 모서리를 복원합니다. */
-    border-radius: 12px; 
-    padding: 18px;
-}
-
-/* 🚩 화살표 숨기기 (점 내비게이션을 위해 유지) */
-.carousel-control-prev,
-.carousel-control-next 
-{
-    display: none; 
-}
-
-/* 🚩 하단 점 (Indicators) 스타일 */
-.carousel-indicators {
-    bottom: 20px;
-    margin-bottom: 0;
-}
-
-/* 🚩 하단 점 모양 및 활성화 색상 */
-.carousel-indicators button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin: 0 5px;
-    background-color: rgba(255, 255, 255, 0.5); 
-    border: none;
-}
-
-.carousel-indicators button.active {
-    background-color: #ffffff; 
-}
-
-
-/* 푸터 */
-footer 
-{
-    margin-top: 60px;
+/* QnA 배너 스타일 */
+.qna-banner {
+    background-color: #eef4fb;
+    border-radius: 8px;
+    padding: 30px;
     text-align: center;
-    color: gray;
-    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
+.qna-text { font-size: 18px; margin-bottom: 15px; color: #333; }
+.qna-btn {
+    background-color: #333;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.qna-btn:hover { background-color: #000; }
 
-/* 🗑️ 반응형 검색창 관련 스타일 제거 */
-@media (max-width: 992px)
-{
-    /* 빈 미디어 쿼리 */
-}
-@media (max-width: 768px)
-{
-    /* 빈 미디어 쿼리 */
+/* 반응형 처리 */
+@media (max-width: 992px) {
+    .navbar-center { display: none; } /* 모바일에서 중앙 메뉴 숨김 (추후 햄버거 메뉴 필요) */
+    .content-wrapper { flex-direction: column; }
 }
