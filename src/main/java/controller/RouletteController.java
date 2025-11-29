@@ -34,7 +34,8 @@ import model.Member;
 import model.MemberDAO;
 
 @WebServlet("/roulette")
-public class RouletteController extends HttpServlet {
+public class RouletteController extends HttpServlet 
+{
 
     private static final List<String> FRUIT_NAMES = Arrays.asList(
         "사과", "레몬", "멜론", "블루베리", "오렌지", "포도", "감", "배", "라임", "복숭아"
@@ -42,21 +43,24 @@ public class RouletteController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
 
         // 1. 로그인 체크: 세션에서 사용자 ID를 확인하여 로그인 여부를 검증합니다.
         HttpSession session = request.getSession(false);
         String userID = (session != null) ? (String) session.getAttribute("userID") : null;
         
         // 로그인되지 않았다면 로그인 페이지로 리다이렉트하고 함수를 종료합니다.
-        if (userID == null) {
+        if (userID == null) 
+        {
             response.sendRedirect(request.getContextPath() + "/view/LoginPage.jsp?error=need_login");
             return;
         }
 
         // --- 룰렛 게임 세션 초기화 로직: 세션 내 초기 캐시 및 게임 횟수 설정 ---
         // 이 로직은 세션당 한 번만 실행되어야 합니다.
-        if (session.getAttribute("rouletteInitialCash") == null) {
+        if (session.getAttribute("rouletteInitialCash") == null) 
+        {
             MemberDAO dao = new MemberDAO();
             Member member = dao.findMemberByID(userID);
             session.setAttribute("rouletteInitialCash", member.getCash());
@@ -67,18 +71,24 @@ public class RouletteController extends HttpServlet {
 
         // 2. 페이지 로드 요청 처리: 'option' 파라미터가 없는 경우 (최초 페이지 로드 또는 과일 수 변경 요청),
         //    룰렛 게임 화면을 구성하기 위한 데이터를 준비하고 JSP 뷰를 반환합니다.
-        if (request.getParameterValues("option") == null) {
+        if (request.getParameterValues("option") == null) 
+        {
             // 'fruitCount' 파라미터를 파싱하여 룰렛 옵션의 개수를 결정합니다.
             String fruitCountStr = request.getParameter("fruitCount");
             int fruitCount = 2; // 기본 과일 옵션 개수
-            if (fruitCountStr != null && !fruitCountStr.isEmpty()) {
-                try {
+            if (fruitCountStr != null && !fruitCountStr.isEmpty()) 
+            {
+                try 
+                {
                     fruitCount = Integer.parseInt(fruitCountStr);
                     // 유효성 검사: FRUIT_NAMES 리스트 범위 내에서 2개 이상 선택 가능
-                    if (fruitCount < 2 || fruitCount > FRUIT_NAMES.size()) {
+                    if (fruitCount < 2 || fruitCount > FRUIT_NAMES.size()) 
+                    {
                         fruitCount = 2; // 허용 범위 벗어나면 기본값으로 설정
                     }
-                } catch (NumberFormatException e) {
+                } 
+                catch (NumberFormatException e) 
+                {
                     fruitCount = 2; // 숫자가 아닌 값이 들어오면 기본값으로 설정
                 }
             }
@@ -101,7 +111,8 @@ public class RouletteController extends HttpServlet {
         MemberDAO dao = new MemberDAO(); // 회원 데이터 접근 객체
         Member member = dao.findMemberByID(userID); // 현재 로그인한 회원 정보 조회
 
-        try {
+        try 
+        {
             // 3.1. 요청 파라미터 파싱 및 유효성 검사
             String[] options = request.getParameterValues("option"); // 룰렛 옵션 목록 (과일 이름)
             String userPick = request.getParameter("userPick");       // 사용자가 베팅한 옵션
@@ -122,11 +133,13 @@ public class RouletteController extends HttpServlet {
             Integer initialCash = (Integer) session.getAttribute("rouletteInitialCash");
             
             // 초기 금액보다 현재 금액이 높을 때만 조작 로직 발동
-            if (initialCash != null && member.getCash() > initialCash) {
+            if (initialCash != null && member.getCash() > initialCash) 
+            {
                 int currentSpin = gameCount; // 현재 스핀 횟수
                 int remainder = currentSpin % 10;
                 // 11, 14, 16, 18, 21, 24, 26, 28 ... 패턴으로 강제 패배 유도
-                if (currentSpin >= 11 && (remainder == 1 || remainder == 4 || remainder == 6 || remainder == 8)) {
+                if (currentSpin >= 11 && (remainder == 1 || remainder == 4 || remainder == 6 || remainder == 8))
+                {
                     forceLoss = true;
                 }
             }
@@ -135,21 +148,29 @@ public class RouletteController extends HttpServlet {
             String winner;
             Random rand = new Random();
 
-            if (forceLoss) { // 강제 패배 조건이 만족된 경우
+            if (forceLoss) 
+            { // 강제 패배 조건이 만족된 경우
                 List<String> nonUserPicks = new ArrayList<>();
                 // 사용자가 선택하지 않은 옵션들 중에서 당첨 옵션을 무작위로 선택
-                for (String option : options) {
-                    if (!option.equals(userPick)) {
+                for (String option : options) 
+                {
+                    if (!option.equals(userPick)) 
+                    {
                         nonUserPicks.add(option);
                     }
                 }
-                if (!nonUserPicks.isEmpty()) {
+                if (!nonUserPicks.isEmpty()) 
+                {
                     winner = nonUserPicks.get(rand.nextInt(nonUserPicks.size())); // 사용자가 선택하지 않은 것 중 랜덤
-                } else {
+                } 
+                else 
+                {
                     // 이 경우는 모든 옵션이 userPick과 같아서 강제 패배가 불가능할 때 발생 (예외 상황)
                     winner = userPick; 
                 }
-            } else { // 일반적인 경우: 모든 옵션 중에서 무작위로 당첨 옵션 선택
+            } 
+            else 
+            { // 일반적인 경우: 모든 옵션 중에서 무작위로 당첨 옵션 선택
                 winner = options[rand.nextInt(options.length)];
             }
 
@@ -157,11 +178,14 @@ public class RouletteController extends HttpServlet {
             boolean isWin = winner.equals(userPick); // 사용자가 선택한 옵션과 당첨 옵션이 일치하는지 확인
             String message;
 
-            if (isWin) {
+            if (isWin) 
+            {
                 double rate = (double) options.length; // 배당률은 룰렛 옵션 개수와 동일
                 GamecashManager.winGame(member, session, betAmount, rate); // 게임 승리 처리 (캐시 증가)
                 message = "대박! " + winner + " 당첨! (+" + String.format("%,d", (int)(betAmount * rate)) + "원)";
-            } else {
+            } 
+            else 
+            {
                 GamecashManager.loseGame(member, session, betAmount); // 게임 패배 처리 (캐시 감소)
                 message = "저런... 결과는 " + winner + " 입니다. (-" + String.format("%,d", betAmount) + "원)";
             }
@@ -175,7 +199,9 @@ public class RouletteController extends HttpServlet {
 
             response.getWriter().write(new Gson().toJson(responseData)); // JSON 데이터를 응답으로 전송
 
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             // 3.7. 오류 처리: 예외 발생 시 클라이언트에 오류 메시지를 JSON 형태로 전송합니다.
             e.printStackTrace(); // 에러 로그 출력 (디버깅용)
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 클라이언트에 400 Bad Request 상태 코드 전송

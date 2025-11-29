@@ -2,7 +2,8 @@ package model;
 
 import java.time.LocalDate;
 
-public class Member {
+public class Member 
+{
     private String userID;
     private String userPW;
     private String nickname;
@@ -11,7 +12,8 @@ public class Member {
     private int cash;                     // 보유 캐시
     private LocalDate lastLoginDate;      // 마지막 로그인 날짜
 
-    public Member(String userID, String userPW, String nickname) {
+    public Member(String userID, String userPW, String nickname) 
+    {
         this.userID = userID;
         this.userPW = userPW;
         this.nickname = nickname;
