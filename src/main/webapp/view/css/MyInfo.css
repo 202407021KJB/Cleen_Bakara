@@ -1,4 +1,4 @@
-/* MyInfo.css - Updated for Layout and Responsive */
+
 body {
     background-color: rgba(248, 249, 250, 0.9);
     font-family: "Noto Sans KR", sans-serif;
@@ -6,17 +6,17 @@ body {
     padding-top: 0;
 }
 
-/* 내비게이션 바 */
+
 .navbar {
     background-color: #2b2b2b;
-    padding: 25px 30px; /* 패딩 조정 */
+    padding: 25px 30px; 
     width: 100%;
     display: flex;
     align-items: center;
     box-sizing: border-box;
 }
 
-/* [FIX] 로고와 버튼을 양쪽 끝으로 정렬 */
+
 .container-fluid {
     display: flex;
     align-items: center;
@@ -24,29 +24,29 @@ body {
     justify-content: space-between; 
 }
 
-/* [FIX] 로고를 왼쪽 정렬로 변경 */
+
 .navbar-brand {
     color: white !important;
     font-size: 22px;
     font-weight: bold;
     text-decoration: none;
-    /* position: absolute 등 제거 */
+    
 }
 
-/* [FIX] 우측 메뉴를 오른쪽 정렬로 변경 */
+
 .navbar-nav {
     display: flex;
     align-items: center;
     padding: 0;
     margin: 0;
     list-style: none;
-    gap: 10px; /* [FIX] 버튼 사이에 간격을 줌 */
+    gap: 10px; 
 }
 
 .menu-btn {
     background: #444;
     padding: 8px 18px;
-    /* margin-left: 10px; REMOVED */
+
     border-radius: 25px;
     color: white !important;
     text-decoration: none;
@@ -66,7 +66,7 @@ body {
     margin: 50px auto;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
-    box-sizing: border-box; /* [FIX] 패딩이 너비에 포함되도록 설정 */
+    box-sizing: border-box; 
 }
 
 .info-container h2 {
@@ -131,7 +131,7 @@ body {
 }
 .delete-btn:hover { background-color: #c82333; }
 
-/* [NEW] 반응형 스타일 */
+/*  반응형 스타일 */
 @media (max-width: 768px) {
     .navbar {
         padding: 20px;
