@@ -1,24 +1,51 @@
+/*
+ * 파일명: Roulette.css
+ * 설명: 룰렛 게임 페이지 (`RoulettePage.jsp`)의 시각적 스타일을 정의하는 CSS 파일입니다.
+ *       룰렛 휠, 베팅 컨트롤, 버튼 등 게임 UI 요소들의 배치, 색상, 폰트 등을 제어하며,
+ *       모바일 환경에 대한 반응형 디자인도 포함합니다.
+ *
+ * 전체 실행 흐름에서의 역할:
+ * 1.  `RoulettePage.jsp`가 로드될 때 `<link rel="stylesheet">` 태그를 통해 브라우저에 적용됩니다.
+ * 2.  페이지의 각 HTML 요소들은 이 CSS 파일에 정의된 규칙에 따라 스타일이 지정되어 시각적으로 표현됩니다.
+ * 3.  특히 `@media` 쿼리를 사용하여 화면 너비가 768px 이하인 모바일 환경에서는 룰렛 캔버스의 크기나
+ *     버튼의 위치 등을 변경하여 모바일에 최적화된 레이아웃을 제공합니다.
+ */
 @charset "UTF-8";
 
 body { 
     font-family: Arial, sans-serif;
     text-align: center; 
-    padding: 20px;
-    background-color: #f4f7f9; /* 사다리 게임과 배경 통일감 부여 */
+    padding: 10px 20px 20px 20px; 
+    background-color: #f4f7f9;
     margin: 0;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
 }
 
 h1 { 
     color: #333; 
-    margin-bottom: 30px;
+    margin-bottom: 15px; 
 }
 
 #game-container { 
-    display: inline-block;
-    margin-top: 20px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* 너비를 100%로 설정하여 유동적으로 만듭니다. */
 }
 
-/* 룰렛과 포인터를 담는 컨테이너 */
+
+.betting-box {
+  background: white;
+  padding: 15px 25px; 
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: inline-block; /* 내용물 크기만큼 너비 차지 */
+  margin-bottom: 20px; 
+}
+
+/* 룰렛 휠과 포인터를 담는 컨테이너 */
 #canvas-container { 
     position: relative;
     width: 500px; 
@@ -30,47 +57,18 @@ h1 {
     position: absolute;
     left: 50%; 
     top: -10px; 
-    transform: translateX(-50%); 
+    transform: translateX(-50%);
     width: 0; 
     height: 0; 
     border-left: 20px solid transparent; 
     border-right: 20px solid transparent;
     border-top: 30px solid red; 
-    z-index: 10; 
+    z-index: 10; /* 다른 요소 위에 표시 */
 }
 
 canvas { 
-    display: block;
-}
-
-.controls { 
-    margin-top: 20px; 
-}
-
-/* 버튼 공통 스타일 */
-.btn { 
-    padding: 12px 25px;
-    border: none; 
-    background: #007bff; 
-    color: #fff; 
-    border-radius: 8px; 
-    cursor: pointer; 
-    margin: 20px 0; 
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-.btn:disabled { 
-    background: #ccc;
-}
-.btn:not(:disabled):hover {
-    background: #0056b3;
-}
-
-#options-container input { 
-    margin: 2px 5px; 
-    width: 100px;
+    width: 100%; 
+    height: 100%; 
 }
 
 /* '로비로 가기' 버튼 스타일 */
@@ -84,11 +82,6 @@ canvas {
     text-decoration: none;
     border-radius: 8px;
     font-size: 14px;
-    transition: background-color 0.3s;
-}
-
-#lobby-btn:hover {
-    background-color: #5a6268;
 }
 
 /* 베팅 입력창 스타일 */
@@ -100,27 +93,53 @@ canvas {
   font-weight: bold;
   text-align: center;
   width: 80px;
-  transition: all 0.3s ease;
-  -moz-appearance: textfield;
-}
-.bet-input::-webkit-outer-spin-button,
-.bet-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.bet-input:focus {
-  border-color: #4ECCA3;
-  box-shadow: 0 0 8px rgba(78, 204, 163, 0.5);
-  outline: none;
 }
 
-/* Styles from LadderPage for consistency */
+/* 과일 개수 변경 컨트롤 영역 */
 .regenerate-controls {
-  margin-top: 12px; /* Consistent spacing */
-  padding-top: 8px; /* Reduced for tighter look */
+  margin-top: 12px;
+  padding-top: 8px;
   border-top: 1px solid #eee;
-  text-align: center; /* Changed to center */
+  text-align: center;
 }
-.regenerate-controls label { font-size: 0.8em; }
-.regenerate-controls .bet-input { width: 55px; font-size: 0.8em; padding: 4px; }
-.regenerate-controls .btn { font-size: 0.8em; padding: 4px 8px; }
+
+.btn-secondary {
+    background-color: #6c757d;
+    padding: 8px 15px; /* 버튼의 크기를 유지하면서 패딩 조정 */
+    color: white; /* 텍스트 색상을 흰색으로 유지 */
+    border: none;
+    border-radius: 5px; /* 둥근 모서리 */
+    font-size: 14px; /* 글꼴 크기 유지 */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 그림자 효과 */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* 호버 시 더 어둡게 */
+    transform: translateY(-1px); /* 살짝 위로 뜨는 효과 */
+}
+
+/* Mobile Responsive: 화면 너비 768px 이하 (모바일 환경)에서 적용되는 스타일을 정의합니다. */
+@media (max-width: 768px) {
+    body {
+        padding: 10px; /* 모바일에서는 패딩을 줄여 공간 확보 */
+    }
+    #lobby-btn {
+        /* 모바일 환경에서는 로비 버튼의 위치를 상대적으로 변경하여 일반적인 흐름에 맞춥니다. */
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: 20px;
+        display: block; /* 블록 요소로 만들어 전체 너비를 차지하게 합니다. */
+    }
+    #canvas-container {
+        width: 95vw; /* 뷰포트 너비의 95%로 캔버스 컨테이너 크기 조절 */
+        height: 95vw; /* 정사각형 비율 유지를 위해 너비와 동일하게 설정 */
+    }
+    .betting-box {
+        width: 90%; /* 베팅 박스 너비를 90%로 조절 */
+        box-sizing: border-box;
+    }
+}
