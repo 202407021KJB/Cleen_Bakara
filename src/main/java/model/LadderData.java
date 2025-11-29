@@ -2,7 +2,8 @@ package model;
 
 import java.util.List;
 
-public class LadderData {
+public class LadderData 
+{
     private List<Integer> xPositions;
     private List<Rung> rungs;
 

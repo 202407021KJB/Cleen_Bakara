@@ -1,6 +1,7 @@
 package model;
 
-public class RouletteData {
+public class RouletteData 
+{
     private String winner;
 
     public RouletteData(String winner) 
