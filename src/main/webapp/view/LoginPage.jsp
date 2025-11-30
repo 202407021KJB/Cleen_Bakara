@@ -3,11 +3,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>로그인</title>
 <!-- 공통 CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=1">
 <!-- 메인 페이지와 달리 로그인 창은 상단 바에 로고만 들어있으면 되니, SimpleCommon.css 사용 -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/SimpleCommon.css?v=1">
+<!-- 반응형 CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/responsive.css?v=1">
 <!-- 알림창 디자인 전용 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>

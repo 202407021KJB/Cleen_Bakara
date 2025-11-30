@@ -11,11 +11,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>공지사항 - Cleen Bakara</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- 공통 CSS 및 공지사항 CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=2">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Notice.css?v=1">
+<!-- 반응형 CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/responsive.css?v=1">
 <!-- 부트스트랩 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 알림창 디자인 전용 CSS -->
@@ -68,34 +71,34 @@
         <tbody>
             <!-- 게시글 클릭 시 NoticeRead.jsp로 이동 -->
             <tr class="notice-row" onclick="location.href='<%=request.getContextPath()%>/view/NoticeRead.jsp?id=5'">
-                <td>5</td>
+                <td data-label="번호">5</td>
                 <td class="title-col"><span class="notice-badge">점검</span> 11월 정기 서버 점검 안내</td>
-                <td>운영자</td>
-                <td>2025.11.27</td>
+                <td data-label="작성자">운영자</td>
+                <td data-label="작성일">2025.11.27</td>
             </tr>
             <tr class="notice-row" onclick="location.href='<%=request.getContextPath()%>/view/NoticeRead.jsp?id=4'">
-                <td>4</td>
+                <td data-label="번호">4</td>
                 <td class="title-col"><span class="notice-badge">이벤트</span> 신규 가입자 10만 캐시 지급!</td>
-                <td>GM바카라</td>
-                <td>2025.11.26</td>
+                <td data-label="작성자">GM바카라</td>
+                <td data-label="작성일">2025.11.26</td>
             </tr>
             <tr class="notice-row" onclick="location.href='<%=request.getContextPath()%>/view/NoticeRead.jsp?id=3'">
-                <td>3</td>
+                <td data-label="번호">3</td>
                 <td class="title-col"><span class="notice-badge">안내</span> 불법 프로그램 사용 제재 명단</td>
-                <td>운영자</td>
-                <td>2025.11.20</td>
+                <td data-label="작성자">운영자</td>
+                <td data-label="작성일">2025.11.20</td>
             </tr>
             <tr class="notice-row" onclick="location.href='<%=request.getContextPath()%>/view/NoticeRead.jsp?id=2'">
-                <td>2</td>
+                <td data-label="번호">2</td>
                 <td class="title-col">룰렛 게임 배당률 상향 조정 안내</td>
-                <td>개발팀</td>
-                <td>2025.11.15</td>
+                <td data-label="작성자">개발팀</td>
+                <td data-label="작성일">2025.11.15</td>
             </tr>
             <tr class="notice-row" onclick="location.href='<%=request.getContextPath()%>/view/NoticeRead.jsp?id=1'">
-                <td>1</td>
+                <td data-label="번호">1</td>
                 <td class="title-col">개인정보 처리방침 변경 안내</td>
-                <td>관리자</td>
-                <td>2025.11.01</td>
+                <td data-label="작성자">관리자</td>
+                <td data-label="작성일">2025.11.01</td>
             </tr>
         </tbody>
     </table>

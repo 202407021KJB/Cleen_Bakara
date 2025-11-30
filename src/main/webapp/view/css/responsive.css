@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+/* Cleen Bakara 반응형 스타일시트 */
+
+/* ========================================================= */
+/* 📱 미디어 쿼리 (모바일 우선) */
+/* 화면 너비 992px 이하일 때 적용 */
+/* ========================================================= */
+@media (max-width: 992px) {
+
+    /* ----------------------------------------- */
+    /* 1. 공통 (네비게이션 바 등) */
+    /* ----------------------------------------- */
+    .navbar {
+        padding: 0 15px; /* 모바일에서 좌우 여백 축소 */
+    }
+    
+    .navbar-brand {
+        font-size: 20px; /* 모바일에서 로고 폰트 크기 축소 */
+    }
+
+    /* 중앙 메뉴 숨기기 (햄버거 메뉴로 대체 필요) */
+    .navbar-center {
+        display: none;
+    }
+
+    .navbar-right .user-info {
+        display: none; /* 유저 정보 숨기고 닉네임만 표시 */
+    }
+
+    .navbar-right {
+        gap: 10px; /* 버튼 간격 축소 */
+    }
+
+    .auth-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    /* body 상단 여백 재조정 */
+    body {
+    	padding-top: 70px;
+    }
+
+
+    /* ----------------------------------------- */
+    /* 2. 메인 페이지 (MainPage.jsp) */
+    /* ----------------------------------------- */
+    #gameCarousel {
+        margin: 15px auto 30px auto;
+        border-radius: 0; /* 모바일에서 화면 꽉 채우도록 */
+    }
+    .carousel-item {
+        height: 300px; /* 모바일 배너 높이 조절 */
+    }
+    .carousel-caption h3 {
+        font-size: 1.2rem;
+    }
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+
+    .content-wrapper {
+        flex-direction: column; /* 공지사항, QnA 세로 정렬 */
+        padding: 0 15px;
+        gap: 20px;
+    }
+
+
+    /* ----------------------------------------- */
+    /* 3. 공지사항 페이지 (NoticePage.jsp) */
+    /* ----------------------------------------- */
+    .notice-container {
+        margin: 20px 0;
+        padding: 20px 15px;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .notice-header h2 {
+        font-size: 1.8rem;
+    }
+
+    /* 테이블을 카드 리스트 형태로 변경 */
+    .notice-table thead {
+        display: none;
+    }
+
+    .notice-table tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .notice-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        padding: 10px 15px;
+        border-bottom: 1px solid #f1f1f1;
+    }
+    
+    .notice-table td:last-child {
+    	border-bottom: none;
+    }
+
+    /* data-label을 사용한 라벨링 */
+    .notice-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left;
+        color: #333;
+    }
+    
+    /* 제목(title-col)은 라벨 없이 전체 너비 사용 */
+    .notice-table td.title-col {
+        padding: 12px 15px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        background-color: #f8f9fa;
+        justify-content: flex-start;
+    }
+    .notice-table td.title-col::before {
+        display: none;
+    }
+
+    /* ----------------------------------------- */
+    /* 4. QnA 페이지 (QnAPage.jsp) */
+    /* ----------------------------------------- */
+    .qna-accordion-section {
+        margin: 20px 0;
+        padding: 15px;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    .qna-accordion-section h1 {
+    	font-size: 1.8rem !important;
+    }
+
+    .accordion-button, .accordion-body {
+        padding: 15px;
+        font-size: 0.95rem;
+    }
+
+
+    /* ----------------------------------------- */
+    /* 5. 로그인 & 회원가입 (Auth Pages) */
+    /* ----------------------------------------- */
+    .auth-container {
+        margin: 20px 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 30px 20px;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        box-sizing: border-box; /* 추가 */
+    }
+
+    .auth-title {
+        font-size: 1.8rem;
+    }
+}
