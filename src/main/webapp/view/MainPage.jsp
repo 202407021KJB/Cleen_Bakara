@@ -18,12 +18,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cleen Bakara</title>
 <!-- 부트스트랩 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- 공통 CSS 및 메인 페이지 전용 CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=1">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/MainPage.css?v=1">
+<!-- 반응형 CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/responsive.css?v=1">
 <!-- 부트스트랩 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 알림창 디자인 전용 CSS -->
@@ -71,7 +74,7 @@
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <a href="#" onclick="checkLoginAndOpenModal('ladderModal')">
+            <a href="#" onclick="handleLadderClick()">
                 <img src="<%=request.getContextPath()%>/view/img/LadderImg.png" class="d-block w-100" alt="사다리 게임">
             </a>
             <div class="carousel-caption">
@@ -242,23 +245,46 @@ function confirmLogout()
     });
 }
 
+function showLoginAlert() {
+    Swal.fire
+    ({
+        title: '로그인이 필요합니다',
+        text: '게임을 이용하시려면 먼저 로그인해주세요.',
+        icon: 'warning',
+        confirmButtonColor: '#004ea2',
+        confirmButtonText: '로그인 하러가기'
+    }).then((result) => {
+        if (result.isConfirmed) 
+        {
+            location.href = CONTEXT_PATH + "/view/LoginPage.jsp";
+        }
+    });
+}
+
+function handleLadderClick() {
+    if (!IS_LOGGED_IN) {
+        showLoginAlert();
+        return;
+    }
+
+    // 모바일 뷰포트 너비 기준 (responsive.css와 동일하게)
+    const isMobile = window.innerWidth <= 992;
+
+    if (isMobile) {
+        // 모바일에서는 바로 게임 시작
+        location.href = CONTEXT_PATH + "/view/LadderPage.jsp?animalCount=3";
+    } else {
+        // 데스크탑에서는 모달창 열기
+        const gameModal = new bootstrap.Modal(document.getElementById('ladderModal'));
+        gameModal.show();
+    }
+}
+
 function checkLoginAndOpenModal(modalId) 
 {
     if (!IS_LOGGED_IN) 
     {
-        Swal.fire
-        ({
-            title: '로그인이 필요합니다',
-            text: '게임을 이용하시려면 먼저 로그인해주세요.',
-            icon: 'warning',
-            confirmButtonColor: '#004ea2',
-            confirmButtonText: '로그인 하러가기'
-        }).then((result) => {
-            if (result.isConfirmed) 
-            {
-                location.href = CONTEXT_PATH + "/view/LoginPage.jsp";
-            }
-        });
+        showLoginAlert();
     } 
     else 
     {

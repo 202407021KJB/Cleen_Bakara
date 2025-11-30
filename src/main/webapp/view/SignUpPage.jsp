@@ -3,11 +3,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원가입 - Cleen Bakara</title>
 <!-- 1. 공통 레이아웃 -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/Layout.css?v=1">
 <!-- 2. 박스 디자인 -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/SimpleCommon.css?v=1">
+<!-- 3. 반응형 CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/view/css/responsive.css?v=1">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- 클라이언트 측 유효성 검사 -->
