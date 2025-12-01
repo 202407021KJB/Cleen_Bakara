@@ -38,7 +38,7 @@ public class LoginController extends HttpServlet
             if (dao.findMemberByID("admin") == null) 
             {
                 Member admin = new Member("admin", "1234", "관리자");
-                admin.setCash(9999999); // 테스트용 캐시
+                admin.setCash(10000000); // 테스트용 캐시
                 dao.addMember(admin);
             }
         }
