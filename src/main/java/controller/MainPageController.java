@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
 // 매핑
+// 매핑의 장점 : 기존에 web.xml에서 연결 시켜야 하는 번거로움을 없애줌
 @WebServlet("/mainpage")
 public class MainPageController extends HttpServlet 
 {
