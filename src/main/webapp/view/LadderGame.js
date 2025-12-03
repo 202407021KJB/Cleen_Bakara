@@ -362,7 +362,7 @@ function handleRegenerate() {
 //   - 'animalCountInput'의 최대값(max)을 3으로 제한합니다.
 //   - 현재 입력된 동물 수가 3보다 크면 3으로 조정하고, 페이지를 재로드하여 제한을 적용합니다.
 function applyMobileLimitations() {
-    const isMobile = window.innerWidth <= 768; // 현재 화면이 모바일 크기인지 확인
+    const isMobile = window.innerWidth <= 992; // 현재 화면이 모바일 크기인지 확인
     if (isMobile) {
         const animalCountInput = document.getElementById("animalCountInput");
         const maxAnimals = 3; // 모바일 환경에서의 최대 동물 수
